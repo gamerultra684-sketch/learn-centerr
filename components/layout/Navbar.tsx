@@ -69,7 +69,7 @@ export default function Navbar() {
   return (
     <>
       {/* ── TOP NAV ── */}
-      <nav className="sticky top-0 z-50 glass border-b dark:border-b-purple-500/20 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(168,85,247,0.1)] transition-all duration-300">
+      <nav className="sticky top-0 z-50 glass border-b border-slate-200/50 dark:border-slate-700/50 transition-all duration-300">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -77,10 +77,10 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2 group">
-                <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:-rotate-6 group-hover:scale-110 transition-all shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+                <div className="w-9 h-9 bg-indigo-600 dark:bg-indigo-500 rounded-xl flex items-center justify-center transform group-hover:-rotate-6 group-hover:scale-110 transition-all shadow-sm">
                   <span className="text-white font-bold text-sm">LC</span>
                 </div>
-                <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-500 dark:to-purple-600">Learn Center</span>
+                <span className="text-xl font-bold text-slate-900 dark:text-white">Learn <span className="text-indigo-600 dark:text-indigo-400">Center</span></span>
               </Link>
             </div>
 
@@ -92,8 +92,8 @@ export default function Navbar() {
                   href={l.href}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     pathname === l.href
-                      ? 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 shadow-[inset_0_0_10px_rgba(168,85,247,0.2)]'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-800/50 hover:text-cyan-600 dark:hover:text-cyan-400'
+                      ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   {l.label}
@@ -170,10 +170,10 @@ export default function Navbar() {
                 </div>
               ) : (
                 <>
-                  <Link href="/login"    className="hidden sm:block px-4 py-2 text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-pink-500 transition-colors">
+                  <Link href="/login"    className="hidden sm:block px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                     Masuk
                   </Link>
-                  <Link href="/register" className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-lg hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all btn-ripple">
+                  <Link href="/register" className="px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors btn-ripple shadow-sm">
                     Daftar
                   </Link>
                 </>

@@ -64,19 +64,19 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="glass border-t-0 mt-auto relative z-10 overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.03)] dark:shadow-[0_-10px_40px_rgba(168,85,247,0.05)] border-t dark:border-t-purple-500/10">
+    <footer className="glass border-t border-slate-200/50 dark:border-slate-700/50 mt-auto relative z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center space-x-2 mb-4 group cursor-pointer">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:-rotate-6 group-hover:scale-110 transition-all shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-9 h-9 bg-indigo-600 dark:bg-indigo-500 rounded-xl flex items-center justify-center shadow-sm">
                 <GraduationIcon />
               </div>
-              <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-500 dark:to-purple-600">Learn Center</span>
+              <span className="text-xl font-bold text-slate-900 dark:text-white">Learn <span className="text-indigo-600 dark:text-indigo-400">Center</span></span>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
               Platform belajar modern dengan berbagai metode pembelajaran efektif untuk membantu Anda mencapai potensi terbaik.
             </p>
             <div className="flex space-x-4">
@@ -85,7 +85,7 @@ export default function Footer() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-purple-500 hover:text-white hover:shadow-[0_0_15px_rgba(168,85,247,0.6)] transform hover:-translate-y-1 transition-all"
+                  className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-indigo-600 hover:text-white transition-all transform hover:-translate-y-0.5"
                 >
                   {s.icon}
                 </a>
@@ -104,7 +104,7 @@ export default function Footer() {
                 { label: 'Catatan',   href: '/notes' },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-gray-600 dark:text-gray-400 hover:text-cyan-500 transition-colors hover:pl-1 duration-300">
+                  <Link href={l.href} className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -123,7 +123,7 @@ export default function Footer() {
                 { label: 'Pomodoro',        href: '/learning?method=pomodoro' },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors hover:pl-1 duration-300">
+                  <Link href={l.href} className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -143,15 +143,15 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-gray-200 dark:border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="border-t border-slate-200 dark:border-slate-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-slate-500 dark:text-slate-500">
             &copy; {year} Learn Center. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0 text-sm">
-            <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-purple-500 transition-colors">
+            <a href="#" className="text-slate-500 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
               Kebijakan Privasi
             </a>
-            <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-purple-500 transition-colors">
+            <a href="#" className="text-slate-500 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
               Syarat &amp; Ketentuan
             </a>
           </div>

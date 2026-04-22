@@ -81,14 +81,14 @@ export default function HomePage() {
 
             {/* Left — Content */}
             <div className="text-center lg:text-left animate-fade-in">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium mb-6">
-                <FaStar className="mr-2 text-yellow-400" />
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 text-sm font-medium mb-6 border border-indigo-100 dark:border-indigo-800">
+                <FaStar className="text-amber-400" />
                 Platform Belajar #1 di Indonesia
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6 text-slate-900 dark:text-white">
                 Belajar Lebih
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 dark:from-cyan-400 dark:via-purple-500 dark:to-pink-500 animate-pulse-slow">Cerdas &amp; Efektif</span>
+                <span className="block text-indigo-600 dark:text-indigo-400">Cerdas &amp; Efektif</span>
               </h1>
 
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0">
@@ -99,7 +99,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <Link
                   href="/quiz"
-                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-[0_0_20px_rgba(216,180,254,0.4)] transform hover:-translate-y-1 transition-all btn-ripple flex items-center justify-center"
+                  className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-sm transform hover:-translate-y-0.5 transition-all btn-ripple flex items-center justify-center"
                 >
                   <FaPlay className="mr-2" />
                   Mulai Belajar
@@ -132,11 +132,11 @@ export default function HomePage() {
             <div className="relative hidden lg:block">
               <div className="relative z-10 animate-float">
                 {/* Main card */}
-                <div className="glass rounded-2xl p-6 transform rotate-3 hover:rotate-0 transition-all duration-500 dark:hover:shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                <div className="glass rounded-2xl p-6 transition-all duration-500 hover:shadow-md">
                   <div className="flex items-center space-x-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-pink-500 dark:shadow-[0_0_8px_rgba(236,72,153,0.6)]" />
-                    <div className="w-3 h-3 rounded-full bg-purple-500 dark:shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
-                    <div className="w-3 h-3 rounded-full bg-cyan-500 dark:shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
+                    <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600" />
+                    <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600" />
+                    <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600" />
                   </div>
                   <div className="space-y-3">
                     <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
@@ -150,7 +150,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Floating badge — correct */}
-                <div className="absolute -top-8 -right-8 glass rounded-xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.1)] animate-bounce-slow">
+                <div className="absolute -top-6 -right-6 glass rounded-xl p-4 shadow-sm">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
                       <FaCheck className="text-green-500" />
@@ -163,7 +163,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Floating badge — streak */}
-                <div className="absolute -bottom-4 -left-8 glass rounded-xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.1)] animate-pulse-slow">
+                <div className="absolute -bottom-4 -left-6 glass rounded-xl p-4 shadow-sm">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
                       <FaBrain className="text-purple-500" />
@@ -176,8 +176,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Spinning dashed ring */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border-2 border-dashed border-primary-200 dark:border-primary-800 rounded-full animate-spin-slow" />
+              {/* Spinning dashed ring removed for minimalism */}
             </div>
           </div>
         </div>
@@ -195,13 +194,13 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: <FaQuestionCircle className="text-white text-2xl" />, title: 'Quiz Interaktif', desc: 'Mode Study dan Exam dengan berbagai tipe soal: PG, Essay, Benar/Salah', color: 'from-cyan-400 to-blue-600', href: '/quiz', cta: 'Coba Quiz' },
-              { icon: <FaLayerGroup className="text-white text-2xl" />, title: 'Flashcard', desc: 'Kartu belajar interaktif dengan animasi flip dan navigasi swipe di mobile', color: 'from-purple-400 to-pink-600', href: '/flashcards', cta: 'Lihat Deck' },
-              { icon: <FaStickyNote className="text-white text-2xl" />, title: 'Catatan Pintar', desc: 'Editor rich text dengan upload file, folder management, dan sharing', color: 'from-pink-400 to-rose-600', href: '/notes', cta: 'Buat Catatan' },
-              { icon: <FaLightbulb className="text-white text-2xl" />, title: 'Metode Belajar', desc: 'Pelajari dan praktikkan teknik Feynman, Blurting, Mind Palace, dan lainnya', color: 'from-violet-400 to-purple-600', href: '/learning', cta: 'Eksplorasi' },
+              { icon: <FaQuestionCircle className="text-indigo-600 dark:text-indigo-400 text-2xl" />, title: 'Quiz Interaktif', desc: 'Mode Study dan Exam dengan berbagai tipe soal: PG, Essay, Benar/Salah', color: 'bg-indigo-50 dark:bg-indigo-900/20', href: '/quiz', cta: 'Coba Quiz' },
+              { icon: <FaLayerGroup className="text-blue-600 dark:text-blue-400 text-2xl" />, title: 'Flashcard', desc: 'Kartu belajar interaktif dengan animasi flip dan navigasi swipe di mobile', color: 'bg-blue-50 dark:bg-blue-900/20', href: '/flashcards', cta: 'Lihat Deck' },
+              { icon: <FaStickyNote className="text-sky-600 dark:text-sky-400 text-2xl" />, title: 'Catatan Pintar', desc: 'Editor rich text dengan upload file, folder management, dan sharing', color: 'bg-sky-50 dark:bg-sky-900/20', href: '/notes', cta: 'Buat Catatan' },
+              { icon: <FaLightbulb className="text-teal-600 dark:text-teal-400 text-2xl" />, title: 'Metode Belajar', desc: 'Pelajari dan praktikkan teknik Feynman, Blurting, Mind Palace, dan lainnya', color: 'bg-teal-50 dark:bg-teal-900/20', href: '/learning', cta: 'Eksplorasi' },
             ].map((f) => (
-              <div key={f.title} className="group glow-hover glass rounded-2xl p-6 text-center border dark:border-gray-800">
-                <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-br ${f.color} rounded-2xl flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
+              <div key={f.title} className="group card-hover glass rounded-2xl p-6 text-center">
+                <div className={`w-16 h-16 mx-auto mb-4 ${f.color} rounded-2xl flex items-center justify-center transform group-hover:scale-105 transition-all duration-300`}>
                   {f.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
@@ -229,8 +228,7 @@ export default function HomePage() {
             {learningMethods.map((method, index) => (
               <div
                 key={method.id}
-                className="group glow-hover glass rounded-2xl overflow-hidden border dark:border-gray-800"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="group card-hover glass rounded-2xl overflow-hidden"
               >
                 <div className={`h-2 bg-gradient-to-r ${method.color}`} />
                 <div className="p-6">
@@ -307,7 +305,7 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((t) => (
-              <div key={t.name} className="glass rounded-2xl p-6 glow-hover border dark:border-gray-800">
+              <div key={t.name} className="glass rounded-2xl p-6 card-hover">
                 <div className="flex items-center mb-4">
                   <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold text-lg`}>
                     {t.initial}
@@ -330,10 +328,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─────────────────────── CTA ─────────────────────── */}
       <section className="py-20 relative z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center glass p-12 rounded-3xl border dark:border-gray-800 neon-border">
-          <h2 className="text-3xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-500">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center glass p-12 rounded-3xl">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
             Siap untuk Meningkatkan Belajar Anda?
           </h2>
           <p className="text-lg mb-8 text-gray-600 dark:text-gray-400">
@@ -351,13 +348,13 @@ export default function HomePage() {
               <>
                   <Link
                     href="/register"
-                    className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all btn-ripple"
+                    className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-sm transform hover:-translate-y-0.5 transition-all btn-ripple"
                   >
                     Daftar Gratis
                   </Link>
                   <Link
                     href="/login"
-                    className="px-8 py-4 glass text-gray-800 dark:text-white rounded-xl font-semibold hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all border border-gray-200 dark:border-gray-700"
+                    className="px-8 py-4 bg-white/50 dark:bg-white/5 text-slate-800 dark:text-white rounded-xl font-semibold hover:bg-white/80 dark:hover:bg-white/10 transition-all border border-slate-300 dark:border-slate-700"
                   >
                     Masuk
                   </Link>

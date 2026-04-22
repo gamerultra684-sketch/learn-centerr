@@ -88,19 +88,19 @@
 }
 
 html {
-  background-color: #fafafa;
+  background-color: #f8fafc; /* Slate 50 */
 }
 html.dark {
-  background-color: #030712; /* Very deep modern dark */
+  background-color: #0f172a; /* Slate 900 */
 }
 
 body {
-  background-color: #fafafa;
-  color: #1f2937;
+  background-color: #f8fafc;
+  color: #1e293b; /* Slate 800 */
 }
 html.dark body {
-  background-color: #030712;
-  color: #f3f4f6;
+  background-color: #0f172a;
+  color: #f1f5f9; /* Slate 100 */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -143,22 +143,22 @@ h1, h2, h3, h4, h5, h6 {
 .dark ::-webkit-scrollbar-track { background: #1f2937; }
 
 /* ------------------------------------------------------------------
-   Glassmorphism (Premium Modern)
+   Glassmorphism (Minimal Soft)
    ------------------------------------------------------------------ */
 .glass {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 .dark .glass {
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  background: rgba(30, 41, 59, 0.5); /* Slate 800/50 */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
 /* ------------------------------------------------------------------
@@ -172,54 +172,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ------------------------------------------------------------------
-   Card hover & Neon Utilities
+   Soft Hover
    ------------------------------------------------------------------ */
 .card-hover {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
-  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
 }
 .dark .card-hover:hover {
-  box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.4);
-  border-color: rgba(139, 92, 246, 0.3);
-  background: rgba(30, 27, 75, 0.4); /* Slight purple tint on hover in dark mode */
-}
-
-/* Futuristic Neon Accents */
-.neon-border {
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-}
-.dark .neon-border {
-  border: 1px solid rgba(139, 92, 246, 0.5);
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2), inset 0 0 10px rgba(139, 92, 246, 0.1);
-}
-
-.neon-text-cyan {
-  color: #0891b2; /* cyan-600 for light */
-}
-.dark .neon-text-cyan {
-  color: #22d3ee;
-  text-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
-}
-
-.neon-text-pink {
-  color: #db2777; /* pink-600 for light */
-}
-.dark .neon-text-pink {
-  color: #f472b6;
-  text-shadow: 0 0 12px rgba(244, 114, 182, 0.5);
-}
-
-.neon-text-purple {
-  color: #9333ea; /* purple-600 for light */
-}
-.dark .neon-text-purple {
-  color: #c084fc;
-  text-shadow: 0 0 12px rgba(192, 132, 252, 0.5);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+  background: rgba(30, 41, 59, 0.7);
 }
 
 /* ------------------------------------------------------------------
