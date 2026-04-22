@@ -4,25 +4,27 @@ import { useEffect, useRef } from 'react';
 import type * as THREE from 'three';
 
 /**
- * RobotMascot — React port of assets/js/robot-mascot.js
- *
- * Pixel-identical visual output:
- * - Helmet-style sphere head
- * - Visor face plate (dark)
- * - Glowing capsule eyes (sky-blue emissive) with blink animation
- * - Cylindrical ears / side detail
- * - Capsule torso + chest plate
- * - Pulsing power core (indigo emissive)
- * - Segmented arms (shoulder → upper arm → elbow → forearm → hand)
- * - Smooth floating + cursor tracking
- *
- * Performance optimizations vs original:
- * - Cleans up renderer + geometries on unmount
- * - devicePixelRatio capped at 1.5 (was 2)
- * - Uses shared geometry instances where possible
+ * RobotMascot — A modern, interactive 3D robot mascot.
+ * Features:
+ * - Sleek, minimalist design (white shell, dark visor)
+ * - Cursor tracking (head and body rotation)
+ * - Dynamic animations: Idle, Blinking, and "Cover Eyes" (for password fields)
+ * - Performance optimized for React/Next.js
  */
-export default function RobotMascot({ className = '' }: { className?: string }) {
+export default function RobotMascot({ 
+  className = '', 
+  isSecretFocused = false 
+}: { 
+  className?: string;
+  isSecretFocused?: boolean;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stateRef = useRef({ isSecretFocused });
+
+  // Sync prop with ref for use in animation loop without re-running useEffect
+  useEffect(() => {
+    stateRef.current.isSecretFocused = isSecretFocused;
+  }, [isSecretFocused]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -35,7 +37,7 @@ export default function RobotMascot({ className = '' }: { className?: string }) 
       const THREE = await import('three');
       if (disposed || !container) return;
 
-      // ── SCENE ──────────────────────────────────────────────────
+      // ── SCENE & CAMERA ──────────────────────────────────────────
       const scene = new THREE.Scene();
 
       const camera = new THREE.PerspectiveCamera(
@@ -44,166 +46,188 @@ export default function RobotMascot({ className = '' }: { className?: string }) 
         0.1,
         100,
       );
-      camera.position.set(0, 0, 3.8);
+      camera.position.set(0, 0, 4);
       camera.lookAt(0, 0, 0);
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(container.clientWidth, container.clientHeight);
-      // Perf: cap pixel ratio at 1.5 instead of 2
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.4;
+      renderer.toneMappingExposure = 1.2;
       renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.domElement.style.cssText = 'display:block;width:100%;height:100%;';
       container.appendChild(renderer.domElement);
 
       // ── LIGHTS ──────────────────────────────────────────────────
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-      const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.0);
       keyLight.position.set(5, 5, 5);
       keyLight.castShadow = true;
       scene.add(keyLight);
-      const rimLight = new THREE.PointLight(0x4f46e5, 1, 10);
-      rimLight.position.set(-2, 2, -2);
+      
+      const rimLight = new THREE.PointLight(0x6366f1, 1, 10);
+      rimLight.position.set(-3, 3, -2);
       scene.add(rimLight);
 
       // ── MATERIALS ───────────────────────────────────────────────
-      const whiteShell  = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.15, metalness: 0.1 });
-      const metalJoint  = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.2,  metalness: 0.8 });
-      const visorMat    = new THREE.MeshStandardMaterial({ color: 0x020617, roughness: 0.1,  metalness: 0.5 });
-      const eyeGlowMat  = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x38bdf8, emissiveIntensity: 3 });
-      const accentMat   = new THREE.MeshStandardMaterial({ color: 0x4f46e5, emissive: 0x4f46e5, emissiveIntensity: 1 });
+      const whiteShell  = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1, metalness: 0.05 });
+      const darkShell   = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2, metalness: 0.2 });
+      const visorMat    = new THREE.MeshStandardMaterial({ color: 0x020617, roughness: 0.1, metalness: 0.5 });
+      const eyeGlowMat  = new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 2 });
+      const jointMat    = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.3, metalness: 0.6 });
 
       // ── GROUPS ──────────────────────────────────────────────────
       const robotRoot = new THREE.Group();
-      const bodyGroup = new THREE.Group();
       const headGroup = new THREE.Group();
+      const bodyGroup = new THREE.Group();
 
       // ── HEAD ────────────────────────────────────────────────────
-      const headBase = new THREE.Mesh(new THREE.SphereGeometry(0.22, 32, 32), whiteShell);
-      headBase.scale.y = 0.95;
+      const headBase = new THREE.Mesh(new THREE.CapsuleGeometry(0.2, 0.1, 16, 32), whiteShell);
+      headBase.rotation.x = Math.PI / 2;
       headGroup.add(headBase);
 
       const visor = new THREE.Mesh(
-        new THREE.SphereGeometry(0.2, 32, 32, 0, Math.PI * 0.8, 0, Math.PI * 0.5),
-        visorMat,
+        new THREE.SphereGeometry(0.18, 32, 16, 0, Math.PI, 0, Math.PI * 0.5),
+        visorMat
       );
       visor.rotation.x = Math.PI / 2;
-      visor.rotation.y = -Math.PI * 0.4;
-      visor.position.set(0, 0, 0.05);
+      visor.position.z = 0.05;
       headGroup.add(visor);
 
-      const eyeGeo = new THREE.CapsuleGeometry(0.015, 0.04, 4, 8);
+      const eyeGeo = new THREE.CapsuleGeometry(0.012, 0.04, 4, 8);
       const leftEye = new THREE.Mesh(eyeGeo, eyeGlowMat);
       leftEye.rotation.z = Math.PI / 2;
-      leftEye.position.set(-0.07, 0, 0.22);
+      leftEye.position.set(-0.08, 0, 0.22);
       headGroup.add(leftEye);
 
-      const rightEye = new THREE.Mesh(eyeGeo.clone(), eyeGlowMat);
-      rightEye.rotation.z = Math.PI / 2;
-      rightEye.position.set(0.07, 0, 0.22);
+      const rightEye = leftEye.clone();
+      rightEye.position.set(0.08, 0, 0.22);
       headGroup.add(rightEye);
 
-      const earGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.04, 16);
-      const leftEar = new THREE.Mesh(earGeo, metalJoint);
-      leftEar.rotation.z = Math.PI / 2;
-      leftEar.position.set(-0.21, 0, 0);
-      headGroup.add(leftEar);
-      const rightEar = leftEar.clone();
-      rightEar.position.set(0.21, 0, 0);
-      headGroup.add(rightEar);
-
       // ── BODY ────────────────────────────────────────────────────
-      const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.2, 0.3, 8, 16), whiteShell);
-      torso.position.set(0, -0.35, 0);
+      const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 0.35, 16, 32), whiteShell);
+      torso.position.y = -0.45;
       bodyGroup.add(torso);
 
-      const chest = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.15, 0.1), whiteShell);
-      chest.position.set(0, -0.28, 0.12);
-      bodyGroup.add(chest);
-
-      const core = new THREE.Mesh(new THREE.CircleGeometry(0.04, 16), accentMat);
-      core.position.set(0, -0.28, 0.175);
-      bodyGroup.add(core);
-
-      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.06, 0.1), metalJoint);
-      neck.position.set(0, -0.15, 0);
-      bodyGroup.add(neck);
+      const chestPlate = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.2, 0.1, 1, 1, 1), darkShell);
+      chestPlate.position.set(0, -0.35, 0.15);
+      bodyGroup.add(chestPlate);
 
       // ── ARMS ────────────────────────────────────────────────────
-      function createArm(isLeft: boolean): THREE.Group {
+      function createArm(isLeft: boolean) {
         const side = isLeft ? -1 : 1;
-        const arm = new THREE.Group();
-        arm.add(new THREE.Mesh(new THREE.SphereGeometry(0.07), whiteShell));                                      // shoulder
-        const ua = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.035, 0.15), whiteShell); ua.position.y = -0.1;  arm.add(ua);  // upper arm
-        const elb = new THREE.Mesh(new THREE.SphereGeometry(0.045), metalJoint); elb.position.y = -0.18; arm.add(elb); // elbow
-        const fa = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.03, 0.15), whiteShell); fa.position.y = -0.26; arm.add(fa);   // forearm
-        const hand = new THREE.Mesh(new THREE.SphereGeometry(0.05), whiteShell); hand.position.y = -0.34; arm.add(hand);             // hand
-        arm.position.set(side * 0.28, -0.25, 0);
-        return arm;
+        const armGroup = new THREE.Group();
+        
+        const shoulder = new THREE.Mesh(new THREE.SphereGeometry(0.08), whiteShell);
+        armGroup.add(shoulder);
+
+        const upperArmGroup = new THREE.Group();
+        const upperArm = new THREE.Mesh(new THREE.CapsuleGeometry(0.04, 0.15, 8, 16), whiteShell);
+        upperArm.position.y = -0.1;
+        upperArmGroup.add(upperArm);
+        armGroup.add(upperArmGroup);
+
+        const lowerArmGroup = new THREE.Group();
+        lowerArmGroup.position.y = -0.22;
+        const elbow = new THREE.Mesh(new THREE.SphereGeometry(0.045), jointMat);
+        lowerArmGroup.add(elbow);
+
+        const lowerArm = new THREE.Mesh(new THREE.CapsuleGeometry(0.045, 0.15, 8, 16), whiteShell);
+        lowerArm.position.y = -0.1;
+        lowerArmGroup.add(lowerArm);
+
+        const hand = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.12, 0.05), whiteShell);
+        hand.position.y = -0.22;
+        lowerArmGroup.add(hand);
+
+        upperArmGroup.add(lowerArmGroup);
+        
+        armGroup.position.set(side * 0.3, -0.3, 0);
+        
+        return { armGroup, upperArmGroup, lowerArmGroup };
       }
 
-      const leftArm  = createArm(true);
-      const rightArm = createArm(false);
-      bodyGroup.add(leftArm, rightArm);
+      const leftArmParts = createArm(true);
+      const rightArmParts = createArm(false);
+      bodyGroup.add(leftArmParts.armGroup, rightArmParts.armGroup);
 
       // ── ASSEMBLE ────────────────────────────────────────────────
       robotRoot.add(headGroup, bodyGroup);
       robotRoot.position.y = -0.1;
       scene.add(robotRoot);
 
-      // ── MOUSE TRACKING ──────────────────────────────────────────
+      // ── INTERACTION ─────────────────────────────────────────────
       const mouse = { x: 0, y: 0 };
       const onMouseMove = (e: MouseEvent) => {
-        mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1;
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       };
       document.addEventListener('mousemove', onMouseMove);
 
       // ── ANIMATION LOOP ──────────────────────────────────────────
-      let time = 0;
-      let blinkTimer = 0;
       const clock = new THREE.Clock();
+      let blinkTimer = 0;
 
       function animate() {
+        if (disposed) return;
         animFrameId = requestAnimationFrame(animate);
+        
+        const time = clock.getElapsedTime();
         const delta = clock.getDelta();
-        time += delta;
-        blinkTimer += delta;
+        const isSecret = stateRef.current.isSecretFocused;
 
-        // Head tracking
-        headGroup.rotation.x += (-mouse.y * 0.4 - headGroup.rotation.x) * 0.1;
-        headGroup.rotation.y += ( mouse.x * 0.6 - headGroup.rotation.y) * 0.1;
+        if (isSecret) {
+          // Move arms to cover eyes
+          leftArmParts.armGroup.rotation.x = THREE.MathUtils.lerp(leftArmParts.armGroup.rotation.x, -0.4, 0.1);
+          leftArmParts.armGroup.rotation.z = THREE.MathUtils.lerp(leftArmParts.armGroup.rotation.z, 0.6, 0.1);
+          leftArmParts.lowerArmGroup.rotation.x = THREE.MathUtils.lerp(leftArmParts.lowerArmGroup.rotation.x, -1.8, 0.1);
+          leftArmParts.lowerArmGroup.rotation.y = THREE.MathUtils.lerp(leftArmParts.lowerArmGroup.rotation.y, 0.8, 0.1);
 
-        // Body subtle follow
-        bodyGroup.rotation.y += (mouse.x * 0.2 - bodyGroup.rotation.y) * 0.05;
+          rightArmParts.armGroup.rotation.x = THREE.MathUtils.lerp(rightArmParts.armGroup.rotation.x, -0.4, 0.1);
+          rightArmParts.armGroup.rotation.z = THREE.MathUtils.lerp(rightArmParts.armGroup.rotation.z, -0.6, 0.1);
+          rightArmParts.lowerArmGroup.rotation.x = THREE.MathUtils.lerp(rightArmParts.lowerArmGroup.rotation.x, -1.8, 0.1);
+          rightArmParts.lowerArmGroup.rotation.y = THREE.MathUtils.lerp(rightArmParts.lowerArmGroup.rotation.y, -0.8, 0.1);
+          
+          // Slight head look down
+          headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, 0.2, 0.1);
+          headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, 0, 0.1);
+        } else {
+          // Idle tracking
+          headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, -mouse.y * 0.4, 0.1);
+          headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, mouse.x * 0.6, 0.1);
+          
+          bodyGroup.rotation.y = THREE.MathUtils.lerp(bodyGroup.rotation.y, mouse.x * 0.2, 0.05);
 
-        // Arm idle sway
-        leftArm.rotation.z  = -0.2 + Math.sin(time * 1.5) * 0.05;
-        leftArm.rotation.x  = Math.sin(time * 1.2) * 0.1;
-        rightArm.rotation.z =  0.2 - Math.sin(time * 1.5) * 0.05;
-        rightArm.rotation.x = Math.sin(time * 1.2 + 0.5) * 0.1;
+          // Arm idle sway
+          const swayX = Math.sin(time * 1.5) * 0.05;
+          const swayZ = Math.sin(time * 1.2) * 0.03;
+          
+          leftArmParts.armGroup.rotation.x = THREE.MathUtils.lerp(leftArmParts.armGroup.rotation.x, swayX, 0.1);
+          leftArmParts.armGroup.rotation.z = THREE.MathUtils.lerp(leftArmParts.armGroup.rotation.z, -0.1 + swayZ, 0.1);
+          leftArmParts.lowerArmGroup.rotation.x = THREE.MathUtils.lerp(leftArmParts.lowerArmGroup.rotation.x, 0.2, 0.1);
+          leftArmParts.lowerArmGroup.rotation.y = THREE.MathUtils.lerp(leftArmParts.lowerArmGroup.rotation.y, 0, 0.1);
 
-        // Blink
-        if (blinkTimer > 3) {
-          const s = Math.abs(Math.sin((blinkTimer - 3) * 15));
-          if (blinkTimer < 3.2) {
-            leftEye.scale.y  = 1 - s;
-            rightEye.scale.y = 1 - s;
-          } else {
-            leftEye.scale.y  = 1;
-            rightEye.scale.y = 1;
-            blinkTimer = Math.random();
-          }
+          rightArmParts.armGroup.rotation.x = THREE.MathUtils.lerp(rightArmParts.armGroup.rotation.x, swayX, 0.1);
+          rightArmParts.armGroup.rotation.z = THREE.MathUtils.lerp(rightArmParts.armGroup.rotation.z, 0.1 - swayZ, 0.1);
+          rightArmParts.lowerArmGroup.rotation.x = THREE.MathUtils.lerp(rightArmParts.lowerArmGroup.rotation.x, 0.2, 0.1);
+          rightArmParts.lowerArmGroup.rotation.y = THREE.MathUtils.lerp(rightArmParts.lowerArmGroup.rotation.y, 0, 0.1);
         }
 
         // Float
-        robotRoot.position.y = -0.1 + Math.sin(time * 2) * 0.05;
+        robotRoot.position.y = -0.1 + Math.sin(time * 2) * 0.03;
 
-        // Core pulse
-        accentMat.emissiveIntensity = 1 + Math.sin(time * 4) * 0.5;
+        // Blink
+        blinkTimer += delta;
+        if (blinkTimer > 3) {
+          const s = Math.abs(Math.sin((blinkTimer - 3) * 15));
+          if (blinkTimer < 3.2) {
+            leftEye.scale.y = rightEye.scale.y = 1 - s;
+          } else {
+            leftEye.scale.y = rightEye.scale.y = 1;
+            blinkTimer = Math.random();
+          }
+        }
 
         renderer.render(scene, camera);
       }
@@ -219,19 +243,18 @@ export default function RobotMascot({ className = '' }: { className?: string }) 
       };
       window.addEventListener('resize', onResize);
 
-      // ── CLEANUP (returned from useEffect) ───────────────────────
+      // ── CLEANUP ─────────────────────────────────────────────────
       return () => {
         disposed = true;
         cancelAnimationFrame(animFrameId);
         document.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('resize', onResize);
         renderer.dispose();
-        // Dispose all geometries and materials
         scene.traverse((obj) => {
           if ((obj as THREE.Mesh).isMesh) {
             (obj as THREE.Mesh).geometry?.dispose();
             const mat = (obj as THREE.Mesh).material;
-            if (Array.isArray(mat)) mat.forEach((m) => m.dispose());
+            if (Array.isArray(mat)) mat.forEach(m => m.dispose());
             else mat?.dispose();
           }
         });
@@ -242,11 +265,9 @@ export default function RobotMascot({ className = '' }: { className?: string }) 
     }
 
     const cleanupPromise = init();
-
     return () => {
       disposed = true;
-      cancelAnimationFrame(animFrameId);
-      cleanupPromise.then((cleanup) => cleanup?.());
+      cleanupPromise.then(cleanup => cleanup?.());
     };
   }, []);
 

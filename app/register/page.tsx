@@ -25,6 +25,7 @@ export default function RegisterPage() {
   const [showConf, setShowConf]  = useState(false);
   const [loading, setLoading]    = useState(false);
   const [error, setError]        = useState('');
+  const [isPassFocused, setIsPassFocused] = useState(false);
 
   function update(key: string, val: string) {
     setForm((f) => ({ ...f, [key]: val }));
@@ -85,7 +86,7 @@ export default function RegisterPage() {
           <div className="absolute top-[15%] left-[15%] w-32 h-32 bg-indigo-200/50 dark:bg-indigo-900/25 rounded-full filter blur-[40px]" />
           <div className="absolute bottom-[15%] right-[15%] w-32 h-32 bg-purple-200/50 dark:bg-purple-900/25 rounded-full filter blur-[40px]" />
           <div id="mascot-3d-container" className="relative z-10 w-full h-full min-h-[500px]">
-            <RobotMascot />
+            <RobotMascot isSecretFocused={isPassFocused} />
           </div>
         </div>
 
@@ -150,6 +151,8 @@ export default function RegisterPage() {
                 <input
                   id="password" type={showPass ? 'text' : 'password'} required
                   autoComplete="new-password"
+                  onFocus={() => setIsPassFocused(true)}
+                  onBlur={() => setIsPassFocused(false)}
                   value={form.password} onChange={(e) => update('password', e.target.value)}
                   placeholder="Minimal 6 karakter" className="auth-input" style={{ paddingRight: 40 }}
                 />
@@ -168,6 +171,8 @@ export default function RegisterPage() {
                 <input
                   id="confirm" type={showConf ? 'text' : 'password'} required
                   autoComplete="new-password"
+                  onFocus={() => setIsPassFocused(true)}
+                  onBlur={() => setIsPassFocused(false)}
                   value={form.confirm} onChange={(e) => update('confirm', e.target.value)}
                   placeholder="Ulangi kata sandi" className="auth-input" style={{ paddingRight: 40 }}
                 />

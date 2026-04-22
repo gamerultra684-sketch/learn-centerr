@@ -28,6 +28,7 @@ export default function LoginPage() {
   const [remember, setRemember]   = useState(false);
   const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState('');
+  const [isPassFocused, setIsPassFocused] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -70,7 +71,7 @@ export default function LoginPage() {
           <div className="absolute top-[15%] left-[15%] w-32 h-32 bg-indigo-200/50 dark:bg-indigo-900/25 rounded-full filter blur-[40px]" />
           <div className="absolute bottom-[15%] right-[15%] w-32 h-32 bg-purple-200/50 dark:bg-purple-900/25 rounded-full filter blur-[40px]" />
           <div id="mascot-3d-container" className="relative z-10 w-full h-full min-h-[400px]">
-            <RobotMascot />
+            <RobotMascot isSecretFocused={isPassFocused} />
           </div>
         </div>
 
@@ -136,6 +137,8 @@ export default function LoginPage() {
                   className="auth-input"
                   style={{ paddingRight: 40 }}
                   autoComplete="current-password"
+                  onFocus={() => setIsPassFocused(true)}
+                  onBlur={() => setIsPassFocused(false)}
                   required
                 />
                 <button
