@@ -49,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 min-h-screen flex flex-col relative overflow-x-hidden pb-16 md:pb-0">
+      <body className="min-h-screen flex flex-col relative overflow-x-hidden pb-16 md:pb-0 transition-colors duration-300">
         <AuthProvider>
           {/* Animated blob background */}
           <AnimatedBackground />

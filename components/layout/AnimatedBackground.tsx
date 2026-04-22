@@ -1,35 +1,62 @@
 'use client';
 
 // Animated blobs background — exact port from header.php
-// Three colored orbs with CSS blob keyframe animation
+// Uses inline styles so keyframes work in both Tailwind v3 & v4
+
 export default function AnimatedBackground() {
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none transition-opacity duration-300">
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: -1,
+        overflow: 'hidden',
+        pointerEvents: 'none',
+      }}
+    >
+      {/* Blue blob — top left */}
       <div
-        className="absolute bg-primary-400/30 dark:bg-primary-900/40 rounded-full mix-blend-multiply dark:mix-blend-screen filter"
         style={{
-          top: '-10%', left: '-10%',
-          width: '40%', height: '40%',
+          position: 'absolute',
+          top: '-10%',
+          left: '-10%',
+          width: '40%',
+          height: '40%',
+          borderRadius: '50%',
           filter: 'blur(80px)',
           animation: 'blob 7s infinite',
+          background: 'rgba(96,165,250,0.25)',
+          mixBlendMode: 'multiply',
         }}
       />
+      {/* Purple blob — top right */}
       <div
-        className="absolute bg-purple-400/30 dark:bg-purple-900/40 rounded-full mix-blend-multiply dark:mix-blend-screen"
         style={{
-          top: '20%', right: '-10%',
-          width: '35%', height: '35%',
+          position: 'absolute',
+          top: '20%',
+          right: '-10%',
+          width: '35%',
+          height: '35%',
+          borderRadius: '50%',
           filter: 'blur(80px)',
           animation: 'blob 8s infinite 2s',
+          background: 'rgba(192,132,252,0.25)',
+          mixBlendMode: 'multiply',
         }}
       />
+      {/* Pink blob — bottom center */}
       <div
-        className="absolute bg-pink-400/30 dark:bg-pink-900/40 rounded-full mix-blend-multiply dark:mix-blend-screen"
         style={{
-          bottom: '-20%', left: '20%',
-          width: '50%', height: '50%',
+          position: 'absolute',
+          bottom: '-20%',
+          left: '20%',
+          width: '50%',
+          height: '50%',
+          borderRadius: '50%',
           filter: 'blur(80px)',
           animation: 'blob 9s infinite 4s',
+          background: 'rgba(249,168,212,0.25)',
+          mixBlendMode: 'multiply',
         }}
       />
     </div>

@@ -1,132 +1,412 @@
 'use client';
 
 import Link from 'next/link';
-import { FaGraduationCap, FaArrowRight, FaBrain, FaLayerGroup, FaStickyNote, FaQuestionCircle, FaLightbulb, FaBookOpen, FaRandom, FaProjectDiagram, FaHome, FaChartLine } from 'react-icons/fa';
+import { useAuth } from '@/lib/auth-context';
+import {
+  FaPlay, FaInfoCircle,
+  FaQuestionCircle, FaLayerGroup, FaStickyNote, FaLightbulb,
+  FaCheckCircle, FaArrowRight,
+  FaCheck, FaBrain,
+  FaStar, FaStarHalfAlt,
+} from 'react-icons/fa';
+
+// ── Learning Methods — ported from functions.php getLearningMethods() ─────
+const learningMethods = [
+  {
+    id: 'feynman',
+    name: 'Teknik Feynman',
+    description: 'Ajarkan kembali apa yang Anda pelajari dengan kata-kata sederhana untuk menguji pemahaman mendalam.',
+    icon: 'brain',
+    color: 'from-blue-400 to-blue-600',
+    steps: ['Pilih konsep yang ingin dipelajari', 'Jelaskan dengan bahasa sederhana', 'Identifikasi celah pengetahuan'],
+  },
+  {
+    id: 'blurting',
+    name: 'Blurting Method',
+    description: 'Tulis semua yang Anda ingat tentang suatu topik tanpa melihat catatan untuk memperkuat memori.',
+    icon: 'pencil-alt',
+    color: 'from-purple-400 to-purple-600',
+    steps: ['Baca materi sekali dengan seksama', 'Tutup buku dan tulis semua yang diingat', 'Bandingkan dengan sumber asli'],
+  },
+  {
+    id: 'mindpalace',
+    name: 'Mind Palace',
+    description: 'Visualisasikan informasi di lokasi-lokasi yang familiar untuk meningkatkan daya ingat jangka panjang.',
+    icon: 'home',
+    color: 'from-green-400 to-green-600',
+    steps: ['Pilih lokasi yang familiar', 'Tempatkan informasi di setiap sudut', 'Bayangkan berjalan melalui lokasi tersebut'],
+  },
+  {
+    id: 'sq3r',
+    name: 'Metode SQ3R',
+    description: 'Survey, Question, Read, Recite, Review — pendekatan sistematis untuk membaca aktif dan memahami teks.',
+    icon: 'book-open',
+    color: 'from-orange-400 to-orange-600',
+    steps: ['Survey: lihat sekilas keseluruhan', 'Question: buat pertanyaan dari judul', 'Read, Recite, Review'],
+  },
+  {
+    id: 'pomodoro',
+    name: 'Teknik Pomodoro',
+    description: 'Belajar dalam interval 25 menit diikuti istirahat singkat untuk menjaga fokus dan produktivitas.',
+    icon: 'clock',
+    color: 'from-red-400 to-red-600',
+    steps: ['Set timer 25 menit', 'Fokus belajar tanpa gangguan', 'Istirahat 5 menit setelah setiap sesi'],
+  },
+  {
+    id: 'spaced',
+    name: 'Spaced Repetition',
+    description: 'Ulang materi pada interval yang semakin panjang untuk memindahkan informasi ke memori jangka panjang.',
+    icon: 'calendar-alt',
+    color: 'from-teal-400 to-teal-600',
+    steps: ['Pelajari materi baru', 'Ulang setelah 1 hari, lalu 3 hari, lalu 1 minggu', 'Gunakan flashcard untuk efisiensi'],
+  },
+];
+
+const testimonials = [
+  { name: 'Ahmad Rizki', role: 'Mahasiswa Teknik', initial: 'A', color: 'from-blue-400 to-blue-600', rating: 5, text: '"Teknik Feynman di Learn Center sangat membantu saya memahami konsep-konsep sulit. Nilai ujian saya meningkat signifikan!"' },
+  { name: 'Siti Nurhaliza', role: 'Siswa SMA', initial: 'S', color: 'from-pink-400 to-pink-600', rating: 5, text: '"Flashcard-nya sangat interaktif dan mudah digunakan. Saya bisa belajar kapan saja, di mana saja. Highly recommended!"' },
+  { name: 'Budi Santoso', role: 'Pekerja Profesional', initial: 'B', color: 'from-green-400 to-green-600', rating: 4.5, text: '"Fitur catatannya luar biasa. Saya bisa mengorganisir materi belajar dengan rapi dan berbagi dengan teman-teman."' },
+];
 
 export default function HomePage() {
-  const features = [
-    { icon: <FaQuestionCircle />, title: 'Quiz Interaktif', desc: 'Uji pengetahuan dengan quiz study & exam mode. Pantau perkembangan Anda.', color: 'from-blue-500 to-cyan-600', href: '/quiz' },
-    { icon: <FaLayerGroup />, title: 'Flashcard', desc: 'Kartu belajar interaktif dengan animasi flip. Efektif untuk hafalan cepat.', color: 'from-purple-500 to-violet-600', href: '/flashcards' },
-    { icon: <FaStickyNote />, title: 'Catatan Cerdas', desc: 'Buat dan kelola catatan dengan editor kaya fitur. Bagikan atau simpan privat.', color: 'from-green-500 to-emerald-600', href: '/notes' },
-    { icon: <FaBrain />, title: 'Metode Belajar', desc: 'SQ3R, Mind Palace, Dual Coding, Interleaving — teknik berbasis riset kognitif.', color: 'from-orange-500 to-amber-600', href: '/learning' },
-    { icon: <FaChartLine />, title: 'Progress Tracking', desc: 'Dashboard analytics dengan grafik nilai, streak belajar, dan distribusi mata pelajaran.', color: 'from-pink-500 to-rose-600', href: '/dashboard' },
-    { icon: <FaGraduationCap />, title: 'Platform Modern', desc: 'UI glassmorphism premium, dark mode, dan PWA — belajar di mana saja.', color: 'from-teal-500 to-cyan-600', href: '/' },
-  ];
-
-  const learningMethods = [
-    { icon: <FaBookOpen />, title: 'SQ3R Reading', desc: '5 tahap terstruktur', color: 'from-teal-500 to-cyan-600', href: '/learning/sq3r' },
-    { icon: <FaRandom />, title: 'Interleaving', desc: 'Rotasi antar topik', color: 'from-indigo-500 to-violet-600', href: '/learning' },
-    { icon: <FaProjectDiagram />, title: 'Visual Builder', desc: 'Peta konsep interaktif', color: 'from-pink-500 to-rose-600', href: '/learning/dual-coding' },
-    { icon: <FaBrain />, title: 'Deep Understanding', desc: 'Elaborative interrogation', color: 'from-violet-500 to-purple-600', href: '/learning' },
-    { icon: <FaHome />, title: 'Mind Palace', desc: 'Memori spasial virtual', color: 'from-amber-500 to-orange-600', href: '/learning/mind-palace' },
-  ];
+  const { user } = useAuth();
 
   return (
     <div className="overflow-x-hidden">
-      {/* ── HERO ── */}
-      <section className="relative min-h-[calc(100vh-64px)] flex items-center justify-center px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm font-medium text-primary-600 dark:text-primary-400 mb-6 animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            Platform Belajar Modern — Berbasis Riset Kognitif
+
+      {/* ─────────────────────── HERO ─────────────────────── */}
+      <section className="relative overflow-hidden" style={{ minHeight: '90vh', display: 'flex', alignItems: 'center' }}>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+            {/* Left — Content */}
+            <div className="text-center lg:text-left animate-fade-in">
+              <div
+                className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium mb-6"
+                style={{
+                  background: 'rgba(37,99,235,0.08)',
+                  color: '#2563eb',
+                  border: '1px solid rgba(37,99,235,0.2)',
+                }}
+              >
+                <FaStar className="mr-2 text-yellow-400" />
+                Platform Belajar #1 di Indonesia
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                Belajar Lebih
+                <span className="block gradient-text">Cerdas &amp; Efektif</span>
+              </h1>
+
+              <p style={{ color: '#4b5563' }} className="text-lg mb-8 max-w-xl mx-auto lg:mx-0 dark:text-gray-400">
+                Tingkatkan pembelajaran Anda dengan berbagai metode terbukti seperti Teknik Feynman, Blurting Method, dan Mind Palace.
+                Quiz interaktif, flashcard, dan catatan pintar dalam satu platform.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                <Link
+                  href="/quiz"
+                  className="px-8 py-4 text-white rounded-xl font-semibold inline-flex items-center justify-center btn-ripple"
+                  style={{ background: 'linear-gradient(135deg, #2563eb, #7c3aed)' }}
+                >
+                  <FaPlay className="mr-2" />
+                  Mulai Belajar
+                </Link>
+                <Link
+                  href="#features"
+                  className="px-8 py-4 rounded-xl font-semibold border inline-flex items-center justify-center transition-all"
+                  style={{ background: '#fff', color: '#374151', borderColor: '#e5e7eb' }}
+                >
+                  <FaInfoCircle className="mr-2" />
+                  Pelajari Lebih
+                </Link>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-6 mt-12 pt-8" style={{ borderTop: '1px solid #e5e7eb' }}>
+                {[
+                  { value: '10K+', label: 'Pengguna Aktif' },
+                  { value: '500+', label: 'Quiz Tersedia' },
+                  { value: '50+',  label: 'Deck Flashcard' },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <div className="text-2xl sm:text-3xl font-bold gradient-text">{s.value}</div>
+                    <div className="text-sm" style={{ color: '#6b7280' }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — Floating illustration (hidden on mobile) */}
+            <div className="relative hidden lg:block">
+              <div className="relative z-10 animate-float">
+                {/* Main card */}
+                <div className="glass rounded-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform duration-500"
+                     style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.1)' }}>
+                  <div className="flex items-center space-x-2 mb-4">
+                    <div className="w-3 h-3 rounded-full bg-red-400" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="h-4 rounded" style={{ background: '#e5e7eb', width: '75%' }} />
+                    <div className="h-4 rounded" style={{ background: '#e5e7eb', width: '100%' }} />
+                    <div className="h-4 rounded" style={{ background: '#e5e7eb', width: '83%' }} />
+                    <div className="flex space-x-2 mt-4">
+                      <div className="h-8 rounded-lg" style={{ background: '#3b82f6', width: '80px' }} />
+                      <div className="h-8 rounded-lg" style={{ background: '#e5e7eb', width: '80px' }} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating badge — correct */}
+                <div className="absolute -top-8 -right-8 glass rounded-xl p-4"
+                     style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.1)', animation: 'bounce 2s infinite' }}>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center"
+                         style={{ background: '#dcfce7' }}>
+                      <FaCheck style={{ color: '#22c55e' }} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold">Jawaban Benar!</div>
+                      <div className="text-xs" style={{ color: '#6b7280' }}>+10 poin</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating badge — streak */}
+                <div className="absolute -bottom-4 -left-8 glass rounded-xl p-4"
+                     style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.1)', animation: 'pulse 3s infinite' }}>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center"
+                         style={{ background: '#f3e8ff' }}>
+                      <FaBrain style={{ color: '#a855f7' }} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold">Streak 7 Hari</div>
+                      <div className="text-xs" style={{ color: '#6b7280' }}>Pertahankan!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Spinning dashed ring */}
+              <div
+                className="absolute rounded-full"
+                style={{
+                  top: '50%', left: '50%',
+                  width: '120%', height: '120%',
+                  transform: 'translate(-50%, -50%)',
+                  border: '2px dashed rgba(37,99,235,0.2)',
+                  animation: 'spin 15s linear infinite',
+                }}
+              />
+            </div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-            Belajar Lebih{' '}
-            <span className="gradient-text">Cerdas</span>{' '}
-            Bukan Lebih Keras
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Quiz interaktif, flashcard, catatan cerdas, dan metode belajar berbasis sains — semuanya dalam satu platform premium.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="px-8 py-4 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-xl hover:-translate-y-1 transition-all inline-flex items-center gap-2 btn-ripple">
-              Mulai Gratis <FaArrowRight />
-            </Link>
-            <Link href="/quiz" className="px-8 py-4 glass rounded-xl font-semibold text-lg hover:shadow-lg hover:-translate-y-1 transition-all inline-flex items-center gap-2">
-              Coba Quiz
-            </Link>
+        </div>
+      </section>
+
+      {/* ─────────────────────── FEATURES ─────────────────────── */}
+      <section id="features" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Fitur Unggulan</h2>
+            <p style={{ color: '#4b5563' }} className="max-w-2xl mx-auto dark:text-gray-400">
+              Semua yang Anda butuhkan untuk belajar dengan efektif dalam satu platform
+            </p>
           </div>
 
-          {/* Stats row */}
-          <div className="mt-16 grid grid-cols-3 gap-6 max-w-lg mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { value: '500+', label: 'Soal Quiz' },
-              { value: '50+', label: 'Deck Flashcard' },
-              { value: '5', label: 'Metode Belajar' },
-            ].map((s) => (
-              <div key={s.label} className="glass rounded-2xl p-4 text-center">
-                <div className="text-2xl font-extrabold gradient-text">{s.value}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{s.label}</div>
+              { icon: <FaQuestionCircle className="text-white text-2xl" />, title: 'Quiz Interaktif', desc: 'Mode Study dan Exam dengan berbagai tipe soal: PG, Essay, Benar/Salah', color: 'from-blue-400 to-blue-600', href: '/quiz', cta: 'Coba Quiz' },
+              { icon: <FaLayerGroup className="text-white text-2xl" />, title: 'Flashcard', desc: 'Kartu belajar interaktif dengan animasi flip dan navigasi swipe di mobile', color: 'from-purple-400 to-purple-600', href: '/flashcards', cta: 'Lihat Deck' },
+              { icon: <FaStickyNote className="text-white text-2xl" />, title: 'Catatan Pintar', desc: 'Editor rich text dengan upload file, folder management, dan sharing', color: 'from-green-400 to-green-600', href: '/notes', cta: 'Buat Catatan' },
+              { icon: <FaLightbulb className="text-white text-2xl" />, title: 'Metode Belajar', desc: 'Pelajari dan praktikkan teknik Feynman, Blurting, Mind Palace, dan lainnya', color: 'from-orange-400 to-orange-600', href: '/learning', cta: 'Eksplorasi' },
+            ].map((f) => (
+              <div key={f.title} className="group card-hover glass rounded-2xl p-6 text-center"
+                   style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
+                <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-br ${f.color} rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform`}>
+                  {f.icon}
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
+                <p style={{ color: '#4b5563' }} className="text-sm mb-4 dark:text-gray-400">{f.desc}</p>
+                <Link href={f.href} className="text-sm font-medium hover:underline" style={{ color: '#2563eb' }}>
+                  {f.cta} <FaArrowRight className="inline ml-1" />
+                </Link>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── FEATURES ── */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Fitur Lengkap untuk Belajar Efektif</h2>
-            <p className="text-gray-500 dark:text-gray-400 text-lg">Semua yang Anda butuhkan dalam satu platform</p>
+      {/* ─────────────────────── LEARNING METHODS ─────────────────────── */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Metode Pembelajaran</h2>
+            <p style={{ color: '#4b5563' }} className="max-w-2xl mx-auto dark:text-gray-400">
+              Gunakan metode belajar terbukti yang digunakan oleh para ahli dan pembelajar sukses
+            </p>
           </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((f) => (
-              <Link key={f.title} href={f.href} className="glass rounded-2xl p-6 card-hover group border border-white/20 dark:border-gray-700/50">
-                <div className={`w-12 h-12 bg-gradient-to-br ${f.color} rounded-xl flex items-center justify-center text-white text-xl mb-4 group-hover:scale-110 transition-transform`}>
-                  {f.icon}
+            {learningMethods.map((method, index) => (
+              <div
+                key={method.id}
+                className="group card-hover glass rounded-2xl overflow-hidden"
+                style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.08)', animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={`h-2 bg-gradient-to-r ${method.color}`} />
+                <div className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${method.color} flex items-center justify-center mr-4`}>
+                      <FaBrain className="text-white text-xl" />
+                    </div>
+                    <h3 className="text-xl font-semibold">{method.name}</h3>
+                  </div>
+                  <p style={{ color: '#4b5563' }} className="mb-4 dark:text-gray-400">{method.description}</p>
+                  <div className="space-y-2 mb-4">
+                    {method.steps.map((step) => (
+                      <div key={step} className="flex items-start text-sm">
+                        <FaCheckCircle className="mt-0.5 mr-2 flex-shrink-0" style={{ color: '#22c55e' }} />
+                        <span style={{ color: '#4b5563' }} className="dark:text-gray-400">{step}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Link
+                    href={`/learning`}
+                    className="block w-full py-3 text-center rounded-lg font-medium transition-colors"
+                    style={{ background: '#f3f4f6', color: '#374151' }}
+                  >
+                    Pelajari Lebih Lanjut
+                  </Link>
                 </div>
-                <h3 className="text-lg font-bold mb-2">{f.title}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{f.desc}</p>
-                <div className="mt-4 flex items-center text-primary-600 dark:text-primary-400 text-sm font-medium">
-                  Jelajahi <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── LEARNING METHODS ── */}
-      <section className="py-20 px-4 bg-gray-100/50 dark:bg-gray-800/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 text-xs font-bold rounded-full uppercase tracking-wider">Baru</span>
-            <h2 className="text-4xl font-bold mt-4 mb-4">Modul Pembelajaran Lanjutan</h2>
-            <p className="text-gray-500 dark:text-gray-400">Teknik belajar berbasis riset kognitif modern</p>
+      {/* ─────────────────────── HOW IT WORKS ─────────────────────── */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Cara Kerja</h2>
+            <p style={{ color: '#4b5563' }} className="max-w-2xl mx-auto dark:text-gray-400">Mulai belajar dalam 3 langkah mudah</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {learningMethods.map((m) => (
-              <Link key={m.title} href={m.href} className="glass rounded-2xl p-5 hover:shadow-lg transition-all group border border-white/20 dark:border-gray-700/50">
-                <div className={`w-12 h-12 bg-gradient-to-br ${m.color} rounded-xl flex items-center justify-center text-white text-lg mb-3 group-hover:scale-110 transition-transform`}>
-                  {m.icon}
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { step: '1', title: 'Pilih Materi', desc: 'Pilih dari ratusan quiz, flashcard deck, atau buat catatan Anda sendiri', gradient: 'from-primary-500 to-primary-600', shadow: 'rgba(37,99,235,0.3)' },
+              { step: '2', title: 'Belajar & Latihan', desc: 'Gunakan mode Study untuk belajar atau Exam untuk menguji pemahaman', gradient: 'from-purple-500 to-purple-600', shadow: 'rgba(168,85,247,0.3)' },
+              { step: '3', title: 'Lacak Progres', desc: 'Pantau perkembangan Anda dengan statistik dan analisis detail', gradient: 'from-green-500 to-green-600', shadow: 'rgba(34,197,94,0.3)' },
+            ].map((item, i) => (
+              <div key={item.step} className="relative text-center">
+                <div
+                  className={`w-20 h-20 mx-auto mb-6 bg-gradient-to-br ${item.gradient} rounded-full flex items-center justify-center text-white text-3xl font-bold`}
+                  style={{ boxShadow: `0 10px 30px ${item.shadow}` }}
+                >
+                  {item.step}
                 </div>
-                <h3 className="font-bold text-sm mb-1">{m.title}</h3>
-                <p className="text-xs text-gray-500">{m.desc}</p>
-                <div className="mt-3 flex items-center text-xs font-medium text-primary-600 dark:text-primary-400">
-                  Mulai <FaArrowRight className="ml-1 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
+                <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
+                <p style={{ color: '#4b5563' }} className="dark:text-gray-400">{item.desc}</p>
+                {/* Arrow connector */}
+                {i < 2 && (
+                  <div className="hidden md:block absolute top-10 left-full w-full" style={{ zIndex: 0 }}>
+                    <svg className="w-full h-8" viewBox="0 0 100 20" fill="none">
+                      <path d="M0 10 H90 M85 5 L90 10 L85 15" stroke="#d1d5db" strokeWidth="2" fill="none" />
+                    </svg>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-20 px-4">
-        <div className="max-w-3xl mx-auto text-center glass rounded-3xl p-12">
-          <h2 className="text-4xl font-bold mb-4">Siap Mulai Belajar?</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">Daftar gratis dan akses semua fitur platform Learn Center</p>
+      {/* ─────────────────────── TESTIMONIALS ─────────────────────── */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Apa Kata Mereka</h2>
+            <p style={{ color: '#4b5563' }} className="max-w-2xl mx-auto dark:text-gray-400">
+              Pengalaman pengguna yang telah menggunakan Learn Center
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((t) => (
+              <div key={t.name} className="glass rounded-2xl p-6 card-hover" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
+                <div className="flex items-center mb-4">
+                  <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold text-lg`}>
+                    {t.initial}
+                  </div>
+                  <div className="ml-4">
+                    <div className="font-semibold">{t.name}</div>
+                    <div className="text-sm" style={{ color: '#6b7280' }}>{t.role}</div>
+                  </div>
+                </div>
+                <div className="flex mb-3">
+                  {Array.from({ length: Math.floor(t.rating) }).map((_, i) => (
+                    <FaStar key={i} className="text-yellow-400" />
+                  ))}
+                  {t.rating % 1 !== 0 && <FaStarHalfAlt className="text-yellow-400" />}
+                </div>
+                <p style={{ color: '#4b5563' }} className="dark:text-gray-400">{t.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────── CTA ─────────────────────── */}
+      <section className="py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center glass p-12 rounded-3xl"
+             style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.1)' }}>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Siap untuk Meningkatkan Belajar Anda?</h2>
+          <p style={{ color: '#4b5563' }} className="text-lg mb-8 dark:text-gray-400">
+            Bergabung dengan ribuan pengguna lainnya dan mulai perjalanan belajar Anda hari ini
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="px-8 py-4 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-xl hover:-translate-y-1 transition-all inline-flex items-center justify-center gap-2 btn-ripple">
-              Daftar Sekarang <FaArrowRight />
-            </Link>
-            <Link href="/login" className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-lg hover:-translate-y-1 transition-all">
-              Sudah Punya Akun
-            </Link>
+            {user ? (
+              <Link
+                href="/dashboard"
+                className="px-8 py-4 text-white rounded-xl font-semibold inline-flex items-center justify-center btn-ripple"
+                style={{ background: 'linear-gradient(135deg, #2563eb, #7c3aed)' }}
+              >
+                Dashboard Saya
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/register"
+                  className="px-8 py-4 text-white rounded-xl font-semibold hover:opacity-90 transition-all inline-flex items-center justify-center btn-ripple"
+                  style={{ background: 'linear-gradient(135deg, #2563eb, #7c3aed)' }}
+                >
+                  Daftar Gratis
+                </Link>
+                <Link
+                  href="/login"
+                  className="px-8 py-4 rounded-xl font-semibold border transition-colors inline-flex items-center justify-center"
+                  style={{ background: '#fff', color: '#374151', borderColor: '#e5e7eb' }}
+                >
+                  Masuk
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
+
+      {/* Scroll to top */}
+      <button
+        id="scrollToTop"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed bottom-8 right-8 w-12 h-12 text-white rounded-full shadow-lg z-50 flex items-center justify-center"
+        style={{ background: '#2563eb' }}
+        aria-label="Scroll to top"
+      >
+        ↑
+      </button>
     </div>
   );
 }
