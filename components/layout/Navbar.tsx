@@ -69,20 +69,8 @@ export default function Navbar() {
   return (
     <>
       {/* ── TOP NAV ── */}
-      <nav
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          background: 'rgba(255,255,255,0.7)',
-          borderBottom: '1px solid rgba(255,255,255,0.8)',
-          boxShadow: '0 1px 20px rgba(0,0,0,0.06)',
-          transition: 'all 0.3s',
-        }}
-        className="dark:bg-gray-900/70 dark:border-gray-700/50"
-      >
+      <nav className="sticky top-0 z-50 glass border-b-0 transition-all duration-300">
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
 

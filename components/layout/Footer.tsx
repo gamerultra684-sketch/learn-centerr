@@ -28,26 +28,26 @@ const YoutubeIcon = () => (
 );
 
 const GraduationIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
     <path d="M22 9L12 5 2 9l10 4 10-4zm-10 7l-7-2.8V17c0 2.2 3.1 4 7 4s7-1.8 7-4v-3.8L12 16z" />
   </svg>
 );
 
 const EnvelopeIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mr-2 flex-shrink-0" style={{ color: '#3b82f6' }}>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500">
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
     <polyline points="22,6 12,13 2,6" />
   </svg>
 );
 
 const PhoneIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mr-2 flex-shrink-0" style={{ color: '#3b82f6' }}>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500">
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 15.92z" />
   </svg>
 );
 
 const MapIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mr-2 flex-shrink-0" style={{ color: '#3b82f6' }}>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mr-2 flex-shrink-0 text-primary-500">
     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
     <circle cx="12" cy="10" r="3" />
   </svg>
@@ -69,35 +69,23 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 
           {/* Brand */}
-          <div>
+          <div className="col-span-1 md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-white"
-                style={{ background: 'linear-gradient(135deg, #3b82f6, #7c3aed)' }}
-              >
+              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-purple-600 rounded-xl flex items-center justify-center">
                 <GraduationIcon />
               </div>
               <span className="text-xl font-bold gradient-text">Learn Center</span>
             </div>
-            <p className="text-sm mb-4" style={{ color: '#4b5563' }}>
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
               Platform belajar modern dengan berbagai metode pembelajaran efektif untuk membantu Anda mencapai potensi terbaik.
             </p>
-            <div className="flex space-x-3">
+            <div className="flex space-x-4">
               {socialLinks.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{ background: '#f3f4f6', color: '#374151' }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = '#2563eb';
-                    (e.currentTarget as HTMLElement).style.color = '#fff';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = '#f3f4f6';
-                    (e.currentTarget as HTMLElement).style.color = '#374151';
-                  }}
+                  className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors"
                 >
                   {s.icon}
                 </a>
@@ -116,10 +104,7 @@ export default function Footer() {
                 { label: 'Catatan',   href: '/notes' },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="transition-colors" style={{ color: '#4b5563' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#2563eb')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = '#4b5563')}
-                  >
+                  <Link href={l.href} className="text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -138,10 +123,7 @@ export default function Footer() {
                 { label: 'Pomodoro',        href: '/learning?method=pomodoro' },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="transition-colors" style={{ color: '#4b5563' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#2563eb')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = '#4b5563')}
-                  >
+                  <Link href={l.href} className="text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -152,7 +134,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="font-semibold mb-4">Hubungi Kami</h3>
-            <ul className="space-y-3 text-sm" style={{ color: '#4b5563' }}>
+            <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               <li className="flex items-center"><EnvelopeIcon /> support@learncenter.com</li>
               <li className="flex items-center"><PhoneIcon /> +62 123 4567 890</li>
               <li className="flex items-center"><MapIcon /> Jakarta, Indonesia</li>
@@ -161,24 +143,15 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div
-          className="mt-8 pt-8 flex flex-col md:flex-row justify-between items-center"
-          style={{ borderTop: '1px solid #e5e7eb' }}
-        >
-          <p className="text-sm" style={{ color: '#6b7280' }}>
+        <div className="border-t border-gray-200 dark:border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             &copy; {year} Learn Center. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0 text-sm">
-            <a href="#" className="transition-colors" style={{ color: '#6b7280' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#2563eb')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#6b7280')}
-            >
+            <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-primary-600 transition-colors">
               Kebijakan Privasi
             </a>
-            <a href="#" className="transition-colors" style={{ color: '#6b7280' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#2563eb')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#6b7280')}
-            >
+            <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-primary-600 transition-colors">
               Syarat &amp; Ketentuan
             </a>
           </div>
