@@ -88,7 +88,7 @@ export default function HomePage() {
 
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
                 Belajar Lebih
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-pulse-slow">Cerdas &amp; Efektif</span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 dark:from-cyan-400 dark:via-purple-500 dark:to-pink-500 animate-pulse-slow">Cerdas &amp; Efektif</span>
               </h1>
 
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0">
@@ -132,11 +132,11 @@ export default function HomePage() {
             <div className="relative hidden lg:block">
               <div className="relative z-10 animate-float">
                 {/* Main card */}
-                <div className="glass rounded-2xl p-6 transform rotate-3 hover:rotate-0 transition-all duration-500 hover:shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                <div className="glass rounded-2xl p-6 transform rotate-3 hover:rotate-0 transition-all duration-500 dark:hover:shadow-[0_0_30px_rgba(34,211,238,0.2)]">
                   <div className="flex items-center space-x-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.6)]" />
-                    <div className="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
-                    <div className="w-3 h-3 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
+                    <div className="w-3 h-3 rounded-full bg-pink-500 dark:shadow-[0_0_8px_rgba(236,72,153,0.6)]" />
+                    <div className="w-3 h-3 rounded-full bg-purple-500 dark:shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
+                    <div className="w-3 h-3 rounded-full bg-cyan-500 dark:shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
                   </div>
                   <div className="space-y-3">
                     <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
@@ -333,7 +333,7 @@ export default function HomePage() {
       {/* ─────────────────────── CTA ─────────────────────── */}
       <section className="py-20 relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center glass p-12 rounded-3xl border dark:border-gray-800 neon-border">
-          <h2 className="text-3xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-500">
             Siap untuk Meningkatkan Belajar Anda?
           </h2>
           <p className="text-lg mb-8 text-gray-600 dark:text-gray-400">

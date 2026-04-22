@@ -74,7 +74,7 @@ export default function Footer() {
               <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:-rotate-6 group-hover:scale-110 transition-all shadow-[0_0_15px_rgba(168,85,247,0.5)]">
                 <GraduationIcon />
               </div>
-              <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">Learn Center</span>
+              <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-500 dark:to-purple-600">Learn Center</span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
               Platform belajar modern dengan berbagai metode pembelajaran efektif untuk membantu Anda mencapai potensi terbaik.

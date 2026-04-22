@@ -177,8 +177,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .card-hover:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15);
-  border-color: rgba(139, 92, 246, 0.2);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 .dark .card-hover:hover {
   box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.4);
@@ -188,18 +188,34 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Futuristic Neon Accents */
 .neon-border {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+.dark .neon-border {
   border: 1px solid rgba(139, 92, 246, 0.5);
   box-shadow: 0 0 15px rgba(139, 92, 246, 0.2), inset 0 0 10px rgba(139, 92, 246, 0.1);
 }
+
 .neon-text-cyan {
+  color: #0891b2; /* cyan-600 for light */
+}
+.dark .neon-text-cyan {
   color: #22d3ee;
   text-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
 }
+
 .neon-text-pink {
+  color: #db2777; /* pink-600 for light */
+}
+.dark .neon-text-pink {
   color: #f472b6;
   text-shadow: 0 0 12px rgba(244, 114, 182, 0.5);
 }
+
 .neon-text-purple {
+  color: #9333ea; /* purple-600 for light */
+}
+.dark .neon-text-purple {
   color: #c084fc;
   text-shadow: 0 0 12px rgba(192, 132, 252, 0.5);
 }
