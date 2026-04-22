@@ -69,7 +69,7 @@ export default function Navbar() {
   return (
     <>
       {/* ── TOP NAV ── */}
-      <nav className="sticky top-0 z-50 glass border-b-0 transition-all duration-300">
+      <nav className="sticky top-0 z-50 glass border-b dark:border-b-purple-500/20 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(168,85,247,0.1)] transition-all duration-300">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -77,10 +77,10 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2 group">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-purple-600 rounded-xl flex items-center justify-center transform group-hover:-rotate-6 transition-transform shadow-sm">
+                <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:-rotate-6 group-hover:scale-110 transition-all shadow-[0_0_15px_rgba(168,85,247,0.5)]">
                   <span className="text-white font-bold text-sm">LC</span>
                 </div>
-                <span className="text-xl font-bold gradient-text">Learn Center</span>
+                <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">Learn Center</span>
               </Link>
             </div>
 
@@ -90,10 +90,10 @@ export default function Navbar() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     pathname === l.href
-                      ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                      ? 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 shadow-[inset_0_0_10px_rgba(168,85,247,0.2)]'
+                      : 'hover:bg-gray-100 dark:hover:bg-gray-800/50 hover:text-cyan-600 dark:hover:text-cyan-400'
                   }`}
                 >
                   {l.label}
@@ -170,10 +170,10 @@ export default function Navbar() {
                 </div>
               ) : (
                 <>
-                  <Link href="/login"    className="hidden sm:block px-4 py-2 text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors">
+                  <Link href="/login"    className="hidden sm:block px-4 py-2 text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-pink-500 transition-colors">
                     Masuk
                   </Link>
-                  <Link href="/register" className="px-4 py-2 text-sm font-medium bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors btn-ripple">
+                  <Link href="/register" className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-lg hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all btn-ripple">
                     Daftar
                   </Link>
                 </>

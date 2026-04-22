@@ -86,19 +86,19 @@
 }
 
 html {
-  background-color: #f9fafb;
+  background-color: #fafafa;
 }
 html.dark {
-  background-color: #111827;
+  background-color: #030712; /* Very deep modern dark */
 }
 
 body {
-  background-color: #f9fafb;
+  background-color: #fafafa;
   color: #1f2937;
 }
 html.dark body {
-  background-color: #111827;
-  color: #e5e7eb;
+  background-color: #030712;
+  color: #f3f4f6;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -141,20 +141,22 @@ h1, h2, h3, h4, h5, h6 {
 .dark ::-webkit-scrollbar-track { background: #1f2937; }
 
 /* ------------------------------------------------------------------
-   Glassmorphism
+   Glassmorphism (Premium Modern)
    ------------------------------------------------------------------ */
 .glass {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
 }
 
 .dark .glass {
-  background: rgba(17, 24, 39, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 /* ------------------------------------------------------------------
@@ -168,17 +170,38 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ------------------------------------------------------------------
-   Card hover
+   Card hover & Neon Utilities
    ------------------------------------------------------------------ */
 .card-hover {
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .card-hover:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.2);
 }
 .dark .card-hover:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.4);
+  border-color: rgba(139, 92, 246, 0.3);
+  background: rgba(30, 27, 75, 0.4); /* Slight purple tint on hover in dark mode */
+}
+
+/* Futuristic Neon Accents */
+.neon-border {
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2), inset 0 0 10px rgba(139, 92, 246, 0.1);
+}
+.neon-text-cyan {
+  color: #22d3ee;
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+}
+.neon-text-pink {
+  color: #f472b6;
+  text-shadow: 0 0 12px rgba(244, 114, 182, 0.5);
+}
+.neon-text-purple {
+  color: #c084fc;
+  text-shadow: 0 0 12px rgba(192, 132, 252, 0.5);
 }
 
 /* ------------------------------------------------------------------

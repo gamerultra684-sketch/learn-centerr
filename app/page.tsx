@@ -86,9 +86,9 @@ export default function HomePage() {
                 Platform Belajar #1 di Indonesia
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
                 Belajar Lebih
-                <span className="block gradient-text">Cerdas &amp; Efektif</span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-pulse-slow">Cerdas &amp; Efektif</span>
               </h1>
 
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0">
@@ -99,14 +99,14 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <Link
                   href="/quiz"
-                  className="px-8 py-4 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/30 transform hover:-translate-y-1 transition-all btn-ripple flex items-center justify-center"
+                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-[0_0_20px_rgba(216,180,254,0.4)] transform hover:-translate-y-1 transition-all btn-ripple flex items-center justify-center"
                 >
                   <FaPlay className="mr-2" />
                   Mulai Belajar
                 </Link>
                 <Link
                   href="#features"
-                  className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all flex items-center justify-center"
+                  className="px-8 py-4 glass text-gray-800 dark:text-white rounded-xl font-semibold hover:bg-white/10 transition-colors border border-gray-200 dark:border-gray-700 flex items-center justify-center"
                 >
                   <FaInfoCircle className="mr-2" />
                   Pelajari Lebih
@@ -132,11 +132,11 @@ export default function HomePage() {
             <div className="relative hidden lg:block">
               <div className="relative z-10 animate-float">
                 {/* Main card */}
-                <div className="glass rounded-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform duration-500 shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
+                <div className="glass rounded-2xl p-6 transform rotate-3 hover:rotate-0 transition-all duration-500 hover:shadow-[0_0_30px_rgba(34,211,238,0.2)]">
                   <div className="flex items-center space-x-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                    <div className="w-3 h-3 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.6)]" />
+                    <div className="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
+                    <div className="w-3 h-3 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
                   </div>
                   <div className="space-y-3">
                     <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
@@ -195,13 +195,13 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: <FaQuestionCircle className="text-white text-2xl" />, title: 'Quiz Interaktif', desc: 'Mode Study dan Exam dengan berbagai tipe soal: PG, Essay, Benar/Salah', color: 'from-blue-400 to-blue-600', href: '/quiz', cta: 'Coba Quiz' },
-              { icon: <FaLayerGroup className="text-white text-2xl" />, title: 'Flashcard', desc: 'Kartu belajar interaktif dengan animasi flip dan navigasi swipe di mobile', color: 'from-purple-400 to-purple-600', href: '/flashcards', cta: 'Lihat Deck' },
-              { icon: <FaStickyNote className="text-white text-2xl" />, title: 'Catatan Pintar', desc: 'Editor rich text dengan upload file, folder management, dan sharing', color: 'from-green-400 to-green-600', href: '/notes', cta: 'Buat Catatan' },
-              { icon: <FaLightbulb className="text-white text-2xl" />, title: 'Metode Belajar', desc: 'Pelajari dan praktikkan teknik Feynman, Blurting, Mind Palace, dan lainnya', color: 'from-orange-400 to-orange-600', href: '/learning', cta: 'Eksplorasi' },
+              { icon: <FaQuestionCircle className="text-white text-2xl" />, title: 'Quiz Interaktif', desc: 'Mode Study dan Exam dengan berbagai tipe soal: PG, Essay, Benar/Salah', color: 'from-cyan-400 to-blue-600', href: '/quiz', cta: 'Coba Quiz' },
+              { icon: <FaLayerGroup className="text-white text-2xl" />, title: 'Flashcard', desc: 'Kartu belajar interaktif dengan animasi flip dan navigasi swipe di mobile', color: 'from-purple-400 to-pink-600', href: '/flashcards', cta: 'Lihat Deck' },
+              { icon: <FaStickyNote className="text-white text-2xl" />, title: 'Catatan Pintar', desc: 'Editor rich text dengan upload file, folder management, dan sharing', color: 'from-pink-400 to-rose-600', href: '/notes', cta: 'Buat Catatan' },
+              { icon: <FaLightbulb className="text-white text-2xl" />, title: 'Metode Belajar', desc: 'Pelajari dan praktikkan teknik Feynman, Blurting, Mind Palace, dan lainnya', color: 'from-violet-400 to-purple-600', href: '/learning', cta: 'Eksplorasi' },
             ].map((f) => (
-              <div key={f.title} className="group card-hover glass rounded-2xl p-6 text-center shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
-                <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-br ${f.color} rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform`}>
+              <div key={f.title} className="group glow-hover glass rounded-2xl p-6 text-center border dark:border-gray-800">
+                <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-br ${f.color} rounded-2xl flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
                   {f.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
@@ -229,7 +229,7 @@ export default function HomePage() {
             {learningMethods.map((method, index) => (
               <div
                 key={method.id}
-                className="group card-hover glass rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
+                className="group glow-hover glass rounded-2xl overflow-hidden border dark:border-gray-800"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={`h-2 bg-gradient-to-r ${method.color}`} />
@@ -307,7 +307,7 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((t) => (
-              <div key={t.name} className="glass rounded-2xl p-6 card-hover shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
+              <div key={t.name} className="glass rounded-2xl p-6 glow-hover border dark:border-gray-800">
                 <div className="flex items-center mb-4">
                   <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold text-lg`}>
                     {t.initial}
@@ -332,8 +332,10 @@ export default function HomePage() {
 
       {/* ─────────────────────── CTA ─────────────────────── */}
       <section className="py-20 relative z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center glass p-12 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Siap untuk Meningkatkan Belajar Anda?</h2>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center glass p-12 rounded-3xl border dark:border-gray-800 neon-border">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">
+            Siap untuk Meningkatkan Belajar Anda?
+          </h2>
           <p className="text-lg mb-8 text-gray-600 dark:text-gray-400">
             Bergabung dengan ribuan pengguna lainnya dan mulai perjalanan belajar Anda hari ini
           </p>
@@ -347,18 +349,18 @@ export default function HomePage() {
               </Link>
             ) : (
               <>
-                <Link
-                  href="/register"
-                  className="px-8 py-4 bg-white text-primary-600 rounded-xl font-semibold hover:bg-gray-100 transition-colors btn-ripple"
-                >
-                  Daftar Gratis
-                </Link>
-                <Link
-                  href="/login"
-                  className="px-8 py-4 glass text-gray-800 dark:text-white rounded-xl font-semibold hover:bg-white/10 transition-colors border border-gray-200 dark:border-gray-700"
-                >
-                  Masuk
-                </Link>
+                  <Link
+                    href="/register"
+                    className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all btn-ripple"
+                  >
+                    Daftar Gratis
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="px-8 py-4 glass text-gray-800 dark:text-white rounded-xl font-semibold hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all border border-gray-200 dark:border-gray-700"
+                  >
+                    Masuk
+                  </Link>
               </>
             )}
           </div>

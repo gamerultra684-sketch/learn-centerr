@@ -64,17 +64,17 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="glass border-t-0 mt-auto relative z-10 overflow-hidden">
+    <footer className="glass border-t-0 mt-auto relative z-10 overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.03)] dark:shadow-[0_-10px_40px_rgba(168,85,247,0.05)] border-t dark:border-t-purple-500/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-purple-600 rounded-xl flex items-center justify-center">
+            <div className="flex items-center space-x-2 mb-4 group cursor-pointer">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:-rotate-6 group-hover:scale-110 transition-all shadow-[0_0_15px_rgba(168,85,247,0.5)]">
                 <GraduationIcon />
               </div>
-              <span className="text-xl font-bold gradient-text">Learn Center</span>
+              <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">Learn Center</span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
               Platform belajar modern dengan berbagai metode pembelajaran efektif untuk membantu Anda mencapai potensi terbaik.
@@ -85,7 +85,7 @@ export default function Footer() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors"
+                  className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-purple-500 hover:text-white hover:shadow-[0_0_15px_rgba(168,85,247,0.6)] transform hover:-translate-y-1 transition-all"
                 >
                   {s.icon}
                 </a>
@@ -104,7 +104,7 @@ export default function Footer() {
                 { label: 'Catatan',   href: '/notes' },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors">
+                  <Link href={l.href} className="text-gray-600 dark:text-gray-400 hover:text-cyan-500 transition-colors hover:pl-1 duration-300">
                     {l.label}
                   </Link>
                 </li>
@@ -123,7 +123,7 @@ export default function Footer() {
                 { label: 'Pomodoro',        href: '/learning?method=pomodoro' },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors">
+                  <Link href={l.href} className="text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors hover:pl-1 duration-300">
                     {l.label}
                   </Link>
                 </li>
@@ -148,10 +148,10 @@ export default function Footer() {
             &copy; {year} Learn Center. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0 text-sm">
-            <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-primary-600 transition-colors">
+            <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-purple-500 transition-colors">
               Kebijakan Privasi
             </a>
-            <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-primary-600 transition-colors">
+            <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-purple-500 transition-colors">
               Syarat &amp; Ketentuan
             </a>
           </div>
