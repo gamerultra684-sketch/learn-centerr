@@ -135,6 +135,7 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
+
             </div>
 
             {/* Right — Floating illustration (hidden on mobile) */}

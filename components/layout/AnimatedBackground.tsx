@@ -1,8 +1,8 @@
 'use client';
 
-// Animated blobs background — exact port from header.php
-// Uses inline styles so keyframes work in both Tailwind v3 & v4
-
+// Exact match to header.php animated gradient blob background
+// Light mode: soft blue/purple/pink blobs on white (multiply blend)
+// Dark mode:  deep purple/blue blobs on dark (screen blend)
 export default function AnimatedBackground() {
   return (
     <div
@@ -14,7 +14,7 @@ export default function AnimatedBackground() {
         pointerEvents: 'none',
       }}
     >
-      {/* Blue blob — top left */}
+      {/* Blob 1 — top-left, blue */}
       <div
         style={{
           position: 'absolute',
@@ -25,11 +25,10 @@ export default function AnimatedBackground() {
           borderRadius: '50%',
           filter: 'blur(80px)',
           animation: 'blob 7s infinite',
-          background: 'rgba(96,165,250,0.25)',
-          mixBlendMode: 'multiply',
+          background: 'rgba(147,197,253,0.45)',
         }}
       />
-      {/* Purple blob — top right */}
+      {/* Blob 2 — top-right, purple */}
       <div
         style={{
           position: 'absolute',
@@ -40,11 +39,10 @@ export default function AnimatedBackground() {
           borderRadius: '50%',
           filter: 'blur(80px)',
           animation: 'blob 8s infinite 2s',
-          background: 'rgba(192,132,252,0.25)',
-          mixBlendMode: 'multiply',
+          background: 'rgba(216,180,254,0.45)',
         }}
       />
-      {/* Pink blob — bottom center */}
+      {/* Blob 3 — bottom-center, pink */}
       <div
         style={{
           position: 'absolute',
@@ -55,8 +53,7 @@ export default function AnimatedBackground() {
           borderRadius: '50%',
           filter: 'blur(80px)',
           animation: 'blob 9s infinite 4s',
-          background: 'rgba(249,168,212,0.25)',
-          mixBlendMode: 'multiply',
+          background: 'rgba(249,168,212,0.40)',
         }}
       />
     </div>
