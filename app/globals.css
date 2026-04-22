@@ -5,6 +5,8 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 /* ------------------------------------------------------------------
    Tailwind v4 theme customization (replaces tailwind.config.ts)
    ------------------------------------------------------------------ */

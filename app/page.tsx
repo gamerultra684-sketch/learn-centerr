@@ -106,7 +106,7 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="#features"
-                  className="px-8 py-4 glass text-gray-800 dark:text-white rounded-xl font-semibold hover:bg-white/10 transition-colors border border-gray-200 dark:border-gray-700 flex items-center justify-center"
+                  className="px-8 py-4 bg-white/50 dark:bg-white/5 text-gray-800 dark:text-white rounded-xl font-semibold hover:bg-white/80 dark:hover:bg-white/10 transition-colors border border-gray-300 dark:border-gray-700 flex items-center justify-center backdrop-blur-md"
                 >
                   <FaInfoCircle className="mr-2" />
                   Pelajari Lebih
