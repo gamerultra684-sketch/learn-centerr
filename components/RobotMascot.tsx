@@ -4,25 +4,6 @@ import { useEffect, useRef } from 'react';
 
 export type MascotState = 'idle' | 'cover' | 'wave' | 'think' | 'shake' | 'cheer' | 'loading';
 
-/**
- * RobotMascot — React port of assets/js/robot-mascot.js (PHP version)
- *
- * Exact same geometry as the PHP site:
- *  - Sphere helmet head + sphere-segment visor
- *  - Capsule glowing eyes (sky-blue)
- *  - Cylinder ears
- *  - Capsule torso + chest plate + indigo power core
- *  - Segmented arms (shoulder → upper → elbow → forearm → hand)
- *
- * PLUS interactive state animations on top:
- *  - 'wave'    — right arm waves (on load)
- *  - 'think'   — left arm to chin, head tilt
- *  - 'cover'   — both arms cover visor, eyes squint
- *  - 'shake'   — head shakes (error)
- *  - 'cheer'   — both arms up, bounce (success)
- *  - 'loading' — gentle nod
- *  - 'idle'    — cursor tracking + arm sway
- */
 export default function RobotMascot({
   className = '',
   mascotState = 'idle',
@@ -31,8 +12,8 @@ export default function RobotMascot({
   mascotState?: MascotState;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const stateRef    = useRef<MascotState>(mascotState);
-  const prevRef     = useRef<MascotState>(mascotState);
+  const stateRef = useRef<MascotState>(mascotState);
+  const prevStateRef = useRef<MascotState>(mascotState);
 
   useEffect(() => { stateRef.current = mascotState; }, [mascotState]);
 
@@ -45,240 +26,235 @@ export default function RobotMascot({
       const THREE = await import('three');
       if (disposed || !container) return;
 
-      // ── SCENE ──────────────────────────────────────────────────────
-      const scene  = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(28, container.clientWidth / container.clientHeight, 0.1, 100);
-      camera.position.set(0, 0, 3.8);
-      camera.lookAt(0, 0, 0);
+      // ── Renderer ──────────────────────────────────────────────────
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(34, container.clientWidth / container.clientHeight, 0.1, 100);
+      camera.position.set(0, 0.05, 3.6);
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(container.clientWidth, container.clientHeight);
       renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.4;
+      renderer.toneMappingExposure = 1.5;
       renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.domElement.style.cssText = 'display:block;width:100%;height:100%;';
       container.appendChild(renderer.domElement);
 
-      // ── LIGHTS ─────────────────────────────────────────────────────
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-      const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
-      keyLight.position.set(5, 5, 5); keyLight.castShadow = true;
-      scene.add(keyLight);
-      const rimLight = new THREE.PointLight(0x4f46e5, 1, 10);
-      rimLight.position.set(-2, 2, -2);
-      scene.add(rimLight);
+      // ── Lights ────────────────────────────────────────────────────
+      scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+      const key = new THREE.DirectionalLight(0xffffff, 1.8);
+      key.position.set(3, 6, 6); scene.add(key);
+      const fill = new THREE.DirectionalLight(0xd8e8ff, 0.6);
+      fill.position.set(-4, 1, 2); scene.add(fill);
+      const rim = new THREE.DirectionalLight(0xffffff, 0.3);
+      rim.position.set(0, -3, -4); scene.add(rim);
 
-      // ── MATERIALS ──────────────────────────────────────────────────
-      const whiteShell = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.15, metalness: 0.1 });
-      const metalJoint = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.2,  metalness: 0.8 });
-      const visorMat   = new THREE.MeshStandardMaterial({ color: 0x020617, roughness: 0.1,  metalness: 0.5 });
-      const eyeGlowMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x38bdf8, emissiveIntensity: 3 });
-      const accentMat  = new THREE.MeshStandardMaterial({ color: 0x4f46e5, emissive: 0x4f46e5, emissiveIntensity: 1 });
-
-      // ── GROUPS ─────────────────────────────────────────────────────
-      const robotRoot = new THREE.Group();
-      const bodyGroup = new THREE.Group();
-      const headGroup = new THREE.Group();
-
-      // ── HEAD ───────────────────────────────────────────────────────
-      const headBase = new THREE.Mesh(new THREE.SphereGeometry(0.22, 32, 32), whiteShell);
-      headBase.scale.y = 0.95;
-      headGroup.add(headBase);
-
-      const visor = new THREE.Mesh(
-        new THREE.SphereGeometry(0.2, 32, 32, 0, Math.PI * 0.8, 0, Math.PI * 0.5),
-        visorMat
-      );
-      visor.rotation.x = Math.PI / 2;
-      visor.rotation.y = -Math.PI * 0.4;
-      visor.position.set(0, 0, 0.05);
-      headGroup.add(visor);
-
-      const eyeGeo = new THREE.CapsuleGeometry(0.015, 0.04, 4, 8);
-      const leftEye  = new THREE.Mesh(eyeGeo, eyeGlowMat);
-      leftEye.rotation.z = Math.PI / 2;
-      leftEye.position.set(-0.07, 0, 0.22);
-      headGroup.add(leftEye);
-
-      const rightEye = new THREE.Mesh(eyeGeo.clone(), eyeGlowMat.clone());
-      rightEye.rotation.z = Math.PI / 2;
-      rightEye.position.set(0.07, 0, 0.22);
-      headGroup.add(rightEye);
-
-      const earGeo  = new THREE.CylinderGeometry(0.05, 0.05, 0.04, 16);
-      const leftEar = new THREE.Mesh(earGeo, metalJoint);
-      leftEar.rotation.z = Math.PI / 2;
-      leftEar.position.set(-0.21, 0, 0);
-      headGroup.add(leftEar);
-      const rightEar = leftEar.clone();
-      rightEar.position.set(0.21, 0, 0);
-      headGroup.add(rightEar);
-
-      // ── BODY ───────────────────────────────────────────────────────
-      const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.2, 0.3, 8, 16), whiteShell);
-      torso.position.set(0, -0.35, 0);
-      bodyGroup.add(torso);
-
-      const chest = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.15, 0.1), whiteShell);
-      chest.position.set(0, -0.28, 0.12);
-      bodyGroup.add(chest);
-
-      const core = new THREE.Mesh(new THREE.CircleGeometry(0.04, 16), accentMat);
-      core.position.set(0, -0.28, 0.175);
-      bodyGroup.add(core);
-
-      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.06, 0.1), metalJoint);
-      neck.position.set(0, -0.15, 0);
-      bodyGroup.add(neck);
-
-      // ── ARMS ───────────────────────────────────────────────────────
-      function createArm(isLeft: boolean) {
-        const side = isLeft ? -1 : 1;
-        const g    = new THREE.Group();
-
-        g.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.07), whiteShell)));
-
-        const ua = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.035, 0.15), whiteShell);
-        ua.position.y = -0.1; g.add(ua);
-
-        const elbow = new THREE.Mesh(new THREE.SphereGeometry(0.045), metalJoint);
-        elbow.position.y = -0.18; g.add(elbow);
-
-        const fa = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.03, 0.15), whiteShell);
-        fa.position.y = -0.26; g.add(fa);
-
-        const hand = new THREE.Mesh(new THREE.SphereGeometry(0.05), whiteShell);
-        hand.position.y = -0.34; g.add(hand);
-
-        g.position.set(side * 0.28, -0.25, 0);
-        return g;
+      // ── Materials ─────────────────────────────────────────────────
+      function bodyMat() {
+        return new THREE.MeshStandardMaterial({ color: 0xeef0f5, roughness: 0.22, metalness: 0.05 });
+      }
+      const visorMat = new THREE.MeshStandardMaterial({ color: 0x080f1e, roughness: 0.08, metalness: 0.1 });
+      function cyanMat() {
+        return new THREE.MeshStandardMaterial({ color: 0x00d4f0, emissive: 0x00b8d4, emissiveIntensity: 0.9, roughness: 0.1 });
       }
 
-      const leftArm  = createArm(true);
-      const rightArm = createArm(false);
+      // ── Groups ────────────────────────────────────────────────────
+      const root = new THREE.Group();
+      const headGroup = new THREE.Group();
+      const bodyGroup = new THREE.Group();
+
+      // ══ HEAD ══════════════════════════════════════════════════════
+      // Wide oval head — sphere scaled wide & slightly flat
+      const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.27, 64, 64), bodyMat());
+      headMesh.scale.set(1.28, 1.0, 0.88);
+      headGroup.add(headMesh);
+
+      // Ear bumps on top (two small spheres)
+      [-0.2, 0.2].forEach(x => {
+        const ear = new THREE.Mesh(new THREE.SphereGeometry(0.072, 24, 24), bodyMat());
+        ear.position.set(x, 0.21, 0.05);
+        headGroup.add(ear);
+      });
+
+      // ── VISOR (dark front panel) ──────────────────────────────────
+      // Clip to show only front-facing part using a geometry trick
+      const visorCap = new THREE.Mesh(
+        new THREE.SphereGeometry(0.23, 48, 48, 0, Math.PI * 2, 0, Math.PI * 0.52),
+        visorMat
+      );
+      visorCap.scale.set(1.28, 1.0, 0.88);
+      visorCap.rotation.x = -Math.PI / 2 + 0.15;
+      visorCap.position.z = 0.01;
+      headGroup.add(visorCap);
+
+      // ── EYES ─────────────────────────────────────────────────────
+      // Happy eyes (semi-circle curves)
+      const eyeGeo = new THREE.TorusGeometry(0.035, 0.012, 16, 32, Math.PI);
+      const leftEye = new THREE.Mesh(eyeGeo, cyanMat());
+      leftEye.position.set(-0.1, 0.04, 0.24);
+      headGroup.add(leftEye);
+
+      const rightEye = new THREE.Mesh(eyeGeo.clone(), cyanMat());
+      rightEye.position.set(0.1, 0.04, 0.24);
+      headGroup.add(rightEye);
+
+      // ── SMILE ────────────────────────────────────────────────────
+      // Half torus (phi 0→π = arc from right→top→left = smile shape, so we rotate it)
+      const smileMesh = new THREE.Mesh(
+        new THREE.TorusGeometry(0.04, 0.01, 16, 32, Math.PI),
+        cyanMat()
+      );
+      smileMesh.rotation.z = Math.PI; // flip to make it a smile
+      smileMesh.position.set(0, -0.05, 0.245);
+      headGroup.add(smileMesh);
+
+      headGroup.position.y = 0.38;
+
+      // ══ BODY ══════════════════════════════════════════════════════
+      const bodyMesh = new THREE.Mesh(new THREE.SphereGeometry(0.29, 48, 48), bodyMat());
+      bodyMesh.scale.set(1.0, 1.22, 0.88);
+      bodyGroup.add(bodyMesh);
+
+      // Chest seam detail
+      const seamMesh = new THREE.Mesh(
+        new THREE.TorusGeometry(0.1, 0.005, 8, 32, Math.PI * 1.3),
+        new THREE.MeshStandardMaterial({ color: 0xc8cdd8, roughness: 0.4 })
+      );
+      seamMesh.rotation.x = Math.PI / 2;
+      seamMesh.position.set(0, 0.04, 0.22);
+      bodyGroup.add(seamMesh);
+
+      bodyGroup.position.y = -0.18;
+
+      // ══ ARMS ══════════════════════════════════════════════════════
+      function makeArm(isLeft: boolean) {
+        const side = isLeft ? -1 : 1;
+        const arm = new THREE.Group();
+        const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.13, 32, 32), bodyMat());
+        mesh.scale.set(0.78, 1.25, 0.72);
+        arm.add(mesh);
+        arm.position.set(side * 0.33, -0.1, 0);
+        arm.rotation.z = side * 0.18;
+        return arm;
+      }
+
+      const leftArm  = makeArm(true);
+      const rightArm = makeArm(false);
       bodyGroup.add(leftArm, rightArm);
 
-      // ── ASSEMBLE ───────────────────────────────────────────────────
-      robotRoot.add(headGroup, bodyGroup);
-      robotRoot.position.y = -0.1;
-      scene.add(robotRoot);
+      root.add(headGroup, bodyGroup);
+      scene.add(root);
 
-      // ── MOUSE ──────────────────────────────────────────────────────
+      // ── Mouse ─────────────────────────────────────────────────────
       const mouse = { x: 0, y: 0 };
       const onMove = (e: MouseEvent) => {
-        mouse.x =  (e.clientX / innerWidth)  * 2 - 1;
+        mouse.x = (e.clientX / innerWidth) * 2 - 1;
         mouse.y = -(e.clientY / innerHeight) * 2 + 1;
       };
       document.addEventListener('mousemove', onMove);
 
-      // ── LOOP ───────────────────────────────────────────────────────
+      // ── Loop ──────────────────────────────────────────────────────
       const clk = new THREE.Clock();
-      let blinkTimer = Math.random();
+      let blinkTimer = Math.random() * 2 + 2;
       let shakeTimer = 0;
       const L = THREE.MathUtils.lerp;
 
       function tick() {
         if (disposed) return;
         raf = requestAnimationFrame(tick);
-        const t   = clk.getElapsedTime();
-        const dt  = clk.getDelta();
-        const st  = stateRef.current;
+        const t  = clk.getElapsedTime();
+        const dt = clk.getDelta();
+        const st = stateRef.current;
 
-        if (st === 'shake' && prevRef.current !== 'shake') shakeTimer = 0;
-        prevRef.current = st;
+        if (st === 'shake' && prevStateRef.current !== 'shake') shakeTimer = 0;
+        prevStateRef.current = st;
 
-        // ── Float (same as PHP version) ──────────────────────────────
-        robotRoot.position.y = -0.1 + Math.sin(t * 2) * 0.05;
-        core.material.emissiveIntensity = 1 + Math.sin(t * 4) * 0.5;
+        // Float
+        root.position.y = Math.sin(t * 1.8) * 0.03;
 
-        // ── Head tracking ────────────────────────────────────────────
-        if (st !== 'cover' && st !== 'shake') {
-          headGroup.rotation.x += (-mouse.y * 0.4 - headGroup.rotation.x) * 0.1;
-          headGroup.rotation.y += ( mouse.x * 0.6 - headGroup.rotation.y) * 0.1;
+        // Head follows cursor (all states except cover)
+        const tHY = st === 'cover' ? 0 : mouse.x * 0.45;
+        const tHX = st === 'cover' ? 0.18 : -mouse.y * 0.25;
+        headGroup.rotation.y = L(headGroup.rotation.y, tHY, 0.11);
+        headGroup.rotation.x = L(headGroup.rotation.x, tHX, 0.11);
+        bodyGroup.rotation.y = L(bodyGroup.rotation.y, mouse.x * 0.08, 0.05);
+
+        // Blink
+        blinkTimer -= dt;
+        if (blinkTimer <= 0) {
+          const p = Math.max(0, 0.22 - (-blinkTimer));
+          const sc = p < 0.11 ? p / 0.11 : (0.22 - p) / 0.11;
+          leftEye.scale.y = rightEye.scale.y = Math.max(0.05, 1 - sc);
+          if (-blinkTimer > 0.22) { leftEye.scale.y = rightEye.scale.y = 1; blinkTimer = Math.random() * 3.5 + 2; }
         }
-        bodyGroup.rotation.y += (mouse.x * 0.2 - bodyGroup.rotation.y) * 0.05;
 
-        // ── Blink (same timing as PHP) ───────────────────────────────
-        blinkTimer += dt;
-        if (blinkTimer > 3) {
-          const s = Math.abs(Math.sin((blinkTimer - 3) * 15));
-          if (blinkTimer < 3.2) {
-            leftEye.scale.y = rightEye.scale.y = 1 - s;
-          } else {
-            leftEye.scale.y = rightEye.scale.y = 1;
-            blinkTimer = Math.random();
-          }
-        }
+        // Eye glow
+        const glow = 0.9 + Math.sin(t * 2.5) * 0.2;
+        (leftEye.material  as THREE.MeshStandardMaterial).emissiveIntensity = glow;
+        (rightEye.material as THREE.MeshStandardMaterial).emissiveIntensity = glow;
+        (smileMesh.material as THREE.MeshStandardMaterial).emissiveIntensity = glow;
 
         // ── STATE MACHINE ────────────────────────────────────────────
         if (st === 'cover') {
-          // Arms raise to cover the visor
-          leftArm.rotation.x  = L(leftArm.rotation.x,  -2.1, 0.1);
-          leftArm.rotation.z  = L(leftArm.rotation.z,   0.7, 0.1);
-          rightArm.rotation.x = L(rightArm.rotation.x, -2.1, 0.1);
-          rightArm.rotation.z = L(rightArm.rotation.z, -0.7, 0.1);
-          headGroup.rotation.x = L(headGroup.rotation.x, 0.18, 0.1);
-          headGroup.rotation.y = L(headGroup.rotation.y,    0, 0.1);
+          leftArm.rotation.x  = L(leftArm.rotation.x,  -2.3, 0.1);
+          leftArm.rotation.z  = L(leftArm.rotation.z,   0.65, 0.1);
+          rightArm.rotation.x = L(rightArm.rotation.x, -2.3, 0.1);
+          rightArm.rotation.z = L(rightArm.rotation.z, -0.65, 0.1);
           leftEye.scale.y  = L(leftEye.scale.y,  0.05, 0.12);
           rightEye.scale.y = L(rightEye.scale.y, 0.05, 0.12);
 
         } else if (st === 'wave') {
-          rightArm.rotation.x = L(rightArm.rotation.x, -2.3 + Math.sin(t * 7) * 0.4, 0.1);
-          rightArm.rotation.z = L(rightArm.rotation.z, -0.8, 0.1);
-          leftArm.rotation.x  = L(leftArm.rotation.x, Math.sin(t * 1.2) * 0.1, 0.1);
-          leftArm.rotation.z  = L(leftArm.rotation.z, -0.2 + Math.sin(t * 1.5) * 0.05, 0.1);
+          rightArm.rotation.x = L(rightArm.rotation.x, -2.4 + Math.sin(t * 7) * 0.38, 0.1);
+          rightArm.rotation.z = L(rightArm.rotation.z, -0.9, 0.1);
+          leftArm.rotation.x  = L(leftArm.rotation.x, 0, 0.1);
+          leftArm.rotation.z  = L(leftArm.rotation.z, 0.18, 0.1);
 
         } else if (st === 'think') {
-          // Left arm toward chin, head tilts
           leftArm.rotation.x  = L(leftArm.rotation.x, -1.5, 0.1);
-          leftArm.rotation.z  = L(leftArm.rotation.z,  0.5, 0.1);
-          rightArm.rotation.x = L(rightArm.rotation.x, Math.sin(t * 1.2 + 0.5) * 0.1, 0.1);
-          rightArm.rotation.z = L(rightArm.rotation.z,  0.2 - Math.sin(t * 1.5) * 0.05, 0.1);
+          leftArm.rotation.z  = L(leftArm.rotation.z,  0.6, 0.1);
+          rightArm.rotation.x = L(rightArm.rotation.x, 0, 0.1);
+          rightArm.rotation.z = L(rightArm.rotation.z, -0.18, 0.1);
           headGroup.rotation.z = L(headGroup.rotation.z, 0.14, 0.06);
 
         } else if (st === 'shake') {
           shakeTimer += dt;
           if (shakeTimer < 1.0)
             headGroup.rotation.y = Math.sin(shakeTimer * 28) * 0.22 * Math.max(0, 1 - shakeTimer);
-          else
-            headGroup.rotation.y = L(headGroup.rotation.y, 0, 0.1);
-          leftArm.rotation.z  = L(leftArm.rotation.z,  -0.2 + Math.sin(t * 1.5) * 0.05, 0.1);
-          rightArm.rotation.z = L(rightArm.rotation.z,   0.2 - Math.sin(t * 1.5) * 0.05, 0.1);
-          leftArm.rotation.x  = L(leftArm.rotation.x, Math.sin(t * 1.2) * 0.1, 0.1);
-          rightArm.rotation.x = L(rightArm.rotation.x, Math.sin(t * 1.2 + 0.5) * 0.1, 0.1);
+          leftArm.rotation.x  = L(leftArm.rotation.x, 0, 0.1);
+          leftArm.rotation.z  = L(leftArm.rotation.z, 0.18, 0.1);
+          rightArm.rotation.x = L(rightArm.rotation.x, 0, 0.1);
+          rightArm.rotation.z = L(rightArm.rotation.z, -0.18, 0.1);
 
         } else if (st === 'cheer') {
-          leftArm.rotation.x  = L(leftArm.rotation.x, -2.4, 0.12);
-          leftArm.rotation.z  = L(leftArm.rotation.z, -0.4, 0.12);
-          rightArm.rotation.x = L(rightArm.rotation.x, -2.4, 0.12);
+          leftArm.rotation.x  = L(leftArm.rotation.x, -2.5, 0.12);
+          leftArm.rotation.z  = L(leftArm.rotation.z, -0.5, 0.12);
+          rightArm.rotation.x = L(rightArm.rotation.x, -2.5, 0.12);
           rightArm.rotation.z = L(rightArm.rotation.z,  0.4, 0.12);
-          robotRoot.position.y = -0.1 + Math.sin(t * 2) * 0.05 + Math.abs(Math.sin(t * 5)) * 0.07;
+          root.position.y += Math.abs(Math.sin(t * 5)) * 0.06;
 
         } else if (st === 'loading') {
-          headGroup.rotation.x += (0.18 + Math.sin(t * 3) * 0.05 - headGroup.rotation.x) * 0.08;
-          headGroup.rotation.y += (0 - headGroup.rotation.y) * 0.08;
-          leftArm.rotation.z   = L(leftArm.rotation.z,  -0.2 + Math.sin(t * 1.5) * 0.05, 0.1);
-          rightArm.rotation.z  = L(rightArm.rotation.z,   0.2 - Math.sin(t * 1.5) * 0.05, 0.1);
-          leftArm.rotation.x   = L(leftArm.rotation.x, Math.sin(t * 1.2) * 0.1, 0.1);
-          rightArm.rotation.x  = L(rightArm.rotation.x, Math.sin(t * 1.2 + 0.5) * 0.1, 0.1);
+          headGroup.rotation.x = L(headGroup.rotation.x, 0.15 + Math.sin(t * 3) * 0.06, 0.08);
+          headGroup.rotation.y = L(headGroup.rotation.y, 0, 0.08);
+          leftArm.rotation.x  = L(leftArm.rotation.x, 0, 0.1);
+          leftArm.rotation.z  = L(leftArm.rotation.z, 0.18, 0.1);
+          rightArm.rotation.x = L(rightArm.rotation.x, 0, 0.1);
+          rightArm.rotation.z = L(rightArm.rotation.z, -0.18, 0.1);
 
         } else {
-          // idle — exact PHP behavior
+          // idle
           headGroup.rotation.z = L(headGroup.rotation.z, 0, 0.05);
-          leftArm.rotation.z   = -0.2 + Math.sin(t * 1.5) * 0.05;
-          leftArm.rotation.x   =        Math.sin(t * 1.2) * 0.1;
-          rightArm.rotation.z  =  0.2 - Math.sin(t * 1.5) * 0.05;
-          rightArm.rotation.x  =        Math.sin(t * 1.2 + 0.5) * 0.1;
+          const sw = Math.sin(t * 1.5) * 0.025;
+          leftArm.rotation.x  = L(leftArm.rotation.x, sw, 0.08);
+          leftArm.rotation.z  = L(leftArm.rotation.z, 0.18, 0.08);
+          rightArm.rotation.x = L(rightArm.rotation.x, sw, 0.08);
+          rightArm.rotation.z = L(rightArm.rotation.z, -0.18, 0.08);
         }
 
         renderer.render(scene, camera);
       }
       tick();
 
-      // ── RESIZE ─────────────────────────────────────────────────────
       const onResize = () => {
         if (!container) return;
         camera.aspect = container.clientWidth / container.clientHeight;
@@ -287,7 +263,6 @@ export default function RobotMascot({
       };
       addEventListener('resize', onResize);
 
-      // ── CLEANUP ────────────────────────────────────────────────────
       return () => {
         disposed = true;
         cancelAnimationFrame(raf);
