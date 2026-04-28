@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { FaEye, FaEyeSlash, FaArrowRight, FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
 import { createClient } from '@/lib/supabase/client';
+import type { MascotState } from '@/components/RobotMascot';
 
 const RobotMascot = dynamic(() => import('@/components/RobotMascot'), {
   ssr: false,
@@ -25,7 +26,7 @@ export default function RegisterPage() {
   const [showConf, setShowConf]  = useState(false);
   const [loading, setLoading]    = useState(false);
   const [error, setError]        = useState('');
-  const [isPassFocused, setIsPassFocused] = useState(false);
+  const [mascotState, setMascotState] = useState<MascotState>('wave');
 
   function update(key: string, val: string) {
     setForm((f) => ({ ...f, [key]: val }));
@@ -49,6 +50,7 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
+    setMascotState('loading');
     
     const { error: signUpError } = await supabase.auth.signUp({
       email: form.email,
@@ -65,9 +67,11 @@ export default function RegisterPage() {
 
     if (signUpError) {
       setError(signUpError.message);
+      setMascotState('shake');
+      setTimeout(() => setMascotState('idle'), 1200);
     } else {
-      router.replace('/dashboard');
-      router.refresh();
+      setMascotState('cheer');
+      setTimeout(() => { router.replace('/dashboard'); router.refresh(); }, 800);
     }
   }
 
@@ -86,7 +90,7 @@ export default function RegisterPage() {
           <div className="absolute top-[15%] left-[15%] w-32 h-32 bg-indigo-200/50 dark:bg-indigo-900/25 rounded-full filter blur-[40px]" />
           <div className="absolute bottom-[15%] right-[15%] w-32 h-32 bg-purple-200/50 dark:bg-purple-900/25 rounded-full filter blur-[40px]" />
           <div id="mascot-3d-container" className="relative z-10 w-full h-full min-h-[500px]">
-            <RobotMascot isSecretFocused={isPassFocused} />
+            <RobotMascot mascotState={mascotState} />
           </div>
         </div>
 
@@ -126,6 +130,8 @@ export default function RegisterPage() {
                   id="username" type="text" required autoComplete="username"
                   value={form.username} onChange={(e) => update('username', e.target.value)}
                   placeholder="johndoe" className="auth-input"
+                  onFocus={() => setMascotState('think')}
+                  onBlur={() => setMascotState('idle')}
                 />
               </div>
             </div>
@@ -139,6 +145,8 @@ export default function RegisterPage() {
                   id="email" type="email" required autoComplete="email"
                   value={form.email} onChange={(e) => update('email', e.target.value)}
                   placeholder="nama@email.com" className="auth-input"
+                  onFocus={() => setMascotState('think')}
+                  onBlur={() => setMascotState('idle')}
                 />
               </div>
             </div>
@@ -151,8 +159,8 @@ export default function RegisterPage() {
                 <input
                   id="password" type={showPass ? 'text' : 'password'} required
                   autoComplete="new-password"
-                  onFocus={() => setIsPassFocused(true)}
-                  onBlur={() => setIsPassFocused(false)}
+                  onFocus={() => setMascotState('cover')}
+                  onBlur={() => setMascotState('idle')}
                   value={form.password} onChange={(e) => update('password', e.target.value)}
                   placeholder="Minimal 6 karakter" className="auth-input" style={{ paddingRight: 40 }}
                 />
@@ -171,8 +179,8 @@ export default function RegisterPage() {
                 <input
                   id="confirm" type={showConf ? 'text' : 'password'} required
                   autoComplete="new-password"
-                  onFocus={() => setIsPassFocused(true)}
-                  onBlur={() => setIsPassFocused(false)}
+                  onFocus={() => setMascotState('cover')}
+                  onBlur={() => setMascotState('idle')}
                   value={form.confirm} onChange={(e) => update('confirm', e.target.value)}
                   placeholder="Ulangi kata sandi" className="auth-input" style={{ paddingRight: 40 }}
                 />

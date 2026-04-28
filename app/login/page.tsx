@@ -7,8 +7,8 @@ import dynamic from 'next/dynamic';
 import { FaEye, FaEyeSlash, FaArrowRight } from 'react-icons/fa';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import { createClient } from '@/lib/supabase/client';
+import type { MascotState } from '@/components/RobotMascot';
 
-// Lazy-load the 3D mascot — only on auth pages, only in browser
 const RobotMascot = dynamic(() => import('@/components/RobotMascot'), {
   ssr: false,
   loading: () => (
@@ -28,7 +28,7 @@ export default function LoginPage() {
   const [remember, setRemember]   = useState(false);
   const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState('');
-  const [isPassFocused, setIsPassFocused] = useState(false);
+  const [mascotState, setMascotState] = useState<MascotState>('wave');
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -40,6 +40,7 @@ export default function LoginPage() {
     }
 
     setLoading(true);
+    setMascotState('loading');
     
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
@@ -50,9 +51,14 @@ export default function LoginPage() {
 
     if (signInError) {
       setError(signInError.message);
+      setMascotState('shake');
+      setTimeout(() => setMascotState('idle'), 1200);
     } else {
-      router.replace('/dashboard');
-      router.refresh();
+      setMascotState('cheer');
+      setTimeout(() => {
+        router.replace('/dashboard');
+        router.refresh();
+      }, 800);
     }
   }
 
@@ -71,7 +77,7 @@ export default function LoginPage() {
           <div className="absolute top-[15%] left-[15%] w-32 h-32 bg-indigo-200/50 dark:bg-indigo-900/25 rounded-full filter blur-[40px]" />
           <div className="absolute bottom-[15%] right-[15%] w-32 h-32 bg-purple-200/50 dark:bg-purple-900/25 rounded-full filter blur-[40px]" />
           <div id="mascot-3d-container" className="relative z-10 w-full h-full min-h-[400px]">
-            <RobotMascot isSecretFocused={isPassFocused} />
+            <RobotMascot mascotState={mascotState} />
           </div>
         </div>
 
@@ -118,6 +124,8 @@ export default function LoginPage() {
                   placeholder="nama@email.com"
                   className="auth-input"
                   autoComplete="email"
+                  onFocus={() => setMascotState('think')}
+                  onBlur={() => setMascotState('idle')}
                   required
                 />
               </div>
@@ -137,8 +145,8 @@ export default function LoginPage() {
                   className="auth-input"
                   style={{ paddingRight: 40 }}
                   autoComplete="current-password"
-                  onFocus={() => setIsPassFocused(true)}
-                  onBlur={() => setIsPassFocused(false)}
+                  onFocus={() => setMascotState('cover')}
+                  onBlur={() => setMascotState('idle')}
                   required
                 />
                 <button
