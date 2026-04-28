@@ -150,7 +150,7 @@ export default function RobotMascot({
 
       // ── ASSEMBLE ───────────────────────────────────────────────────
       robotRoot.add(headGroup, bodyGroup);
-      robotRoot.position.y = -0.1;
+      robotRoot.position.y = 0.15; // Set higher base position
       scene.add(robotRoot);
 
       // ── MOUSE ──────────────────────────────────────────────────────
@@ -178,7 +178,7 @@ export default function RobotMascot({
         prevRef.current = st;
 
         // Floating
-        robotRoot.position.y = -0.1 + Math.sin(t * 2) * 0.05;
+        robotRoot.position.y = 0.15 + Math.sin(t * 2) * 0.05; // Base is now 0.15 to be centered
         core.material.emissiveIntensity = 1 + Math.sin(t * 4) * 0.5;
 
         // Head tracking
@@ -189,17 +189,20 @@ export default function RobotMascot({
         bodyGroup.rotation.y += (mouse.x * 0.2 - bodyGroup.rotation.y) * 0.05;
 
         // Natural Blink Logic (when not forced to cover)
+        let eyeTarget = 1;
         if (st !== 'cover') {
           blinkTimer += dt;
           if (blinkTimer > 3) {
             const s = Math.abs(Math.sin((blinkTimer - 3) * 15));
             if (blinkTimer < 3.2) {
-              leftEye.scale.y = rightEye.scale.y = 1 - s;
+              eyeTarget = 1 - s;
             } else {
-              leftEye.scale.y = rightEye.scale.y = 1;
               blinkTimer = Math.random();
             }
           }
+          // Lerp back to target smoothly so it immediately recovers from 'cover' state
+          leftEye.scale.y = L(leftEye.scale.y, eyeTarget, 0.2);
+          rightEye.scale.y = L(rightEye.scale.y, eyeTarget, 0.2);
         }
 
         // ── STATE MACHINE ────────────────────────────────────────────
@@ -246,7 +249,7 @@ export default function RobotMascot({
           leftArm.rotation.z  = L(leftArm.rotation.z, -0.4, 0.12);
           rightArm.rotation.x = L(rightArm.rotation.x, -2.4, 0.12);
           rightArm.rotation.z = L(rightArm.rotation.z,  0.4, 0.12);
-          robotRoot.position.y = -0.1 + Math.sin(t * 2) * 0.05 + Math.abs(Math.sin(t * 5)) * 0.07;
+          robotRoot.position.y = 0.15 + Math.sin(t * 2) * 0.05 + Math.abs(Math.sin(t * 5)) * 0.07;
           headGroup.rotation.z = L(headGroup.rotation.z, 0, 0.05);
 
         } else if (st === 'loading') {
