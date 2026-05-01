@@ -76,7 +76,7 @@ export default function HomePage() {
     <div className="overflow-x-hidden">
 
       {/* ─────────────────────── HERO ─────────────────────── */}
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center z-10">
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center z-10 -mt-28 pt-28">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
 

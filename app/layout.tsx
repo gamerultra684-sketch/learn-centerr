@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div id="toastContainer" />
 
           {/* Page content */}
-          <main className="flex-grow relative z-10">
+          <main className="flex-grow relative z-10 pt-28">
             {children}
           </main>
 
