@@ -77,9 +77,7 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2 group pl-2">
-                <div className="w-8 h-8 bg-gradient-to-tr from-indigo-600 to-fuchsia-500 rounded-full flex items-center justify-center transform group-hover:-rotate-12 group-hover:scale-110 transition-all shadow-sm">
-                  <span className="text-white font-bold text-xs">LC</span>
-                </div>
+                <img src="/images/logo.png" alt="Learn Center Logo" className="w-8 h-8 object-contain transform group-hover:-rotate-12 group-hover:scale-110 transition-all drop-shadow-sm" />
                 <span className="text-lg font-bold text-slate-900 dark:text-white hidden sm:block">Learn <span className="text-indigo-600 dark:text-fuchsia-400">Center</span></span>
               </Link>
             </div>
@@ -211,9 +209,7 @@ export default function Navbar() {
           {/* Header */}
           <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xs">LC</span>
-              </div>
+              <img src="/images/logo.png" alt="Learn Center Logo" className="w-8 h-8 object-contain" />
               <span className="text-xl font-bold gradient-text">Learn Center</span>
             </div>
             <button

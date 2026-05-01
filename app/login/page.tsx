@@ -86,10 +86,8 @@ export default function LoginPage() {
 
           {/* Header */}
           <div className="mb-6">
-            <Link href="/" className="inline-flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 bg-gradient-to-br from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xs">LC</span>
-              </div>
+            <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
+              <img src="/images/logo.png" alt="Learn Center Logo" className="w-8 h-8 object-contain transform group-hover:-rotate-12 group-hover:scale-110 transition-all" />
               <span className="text-base font-bold text-gray-900 dark:text-white">Learn Center</span>
             </Link>
             <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
