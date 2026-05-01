@@ -2,31 +2,46 @@
 
 export default function AnimatedBackground() {
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none transition-opacity duration-500 bg-[#f8fafc] dark:bg-[#030712]">
-      {/* Light Blue Blob */}
+    <div
+      className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none"
+      style={{ backgroundColor: '#f8fafc' }}
+    >
+      {/* Blue Blob — top left */}
       <div
-        className="absolute bg-blue-300/60 dark:bg-blue-800/40 rounded-full blur-[100px] dark:blur-[120px]"
+        className="absolute rounded-full"
         style={{
-          top: '-10%', left: '-10%',
-          width: '50%', height: '50%',
+          top: '-10%',
+          left: '-10%',
+          width: '55%',
+          height: '55%',
+          background: 'radial-gradient(circle, rgba(147,197,253,0.7) 0%, rgba(196,181,253,0.3) 70%, transparent 100%)',
+          filter: 'blur(80px)',
           animation: 'blob 18s infinite',
         }}
       />
-      {/* Light Purple Blob */}
+      {/* Purple Blob — top right */}
       <div
-        className="absolute bg-purple-300/60 dark:bg-purple-800/40 rounded-full blur-[100px] dark:blur-[120px]"
+        className="absolute rounded-full"
         style={{
-          top: '10%', right: '-10%',
-          width: '50%', height: '50%',
+          top: '5%',
+          right: '-10%',
+          width: '50%',
+          height: '50%',
+          background: 'radial-gradient(circle, rgba(196,181,253,0.7) 0%, rgba(249,168,212,0.3) 70%, transparent 100%)',
+          filter: 'blur(80px)',
           animation: 'blob 22s infinite 5s',
         }}
       />
-      {/* Light Pink Blob */}
+      {/* Pink Blob — bottom center */}
       <div
-        className="absolute bg-pink-300/60 dark:bg-pink-800/40 rounded-full blur-[100px] dark:blur-[120px]"
+        className="absolute rounded-full"
         style={{
-          bottom: '-15%', left: '10%',
-          width: '60%', height: '60%',
+          bottom: '-10%',
+          left: '15%',
+          width: '65%',
+          height: '65%',
+          background: 'radial-gradient(circle, rgba(249,168,212,0.65) 0%, rgba(147,197,253,0.2) 70%, transparent 100%)',
+          filter: 'blur(90px)',
           animation: 'blob 25s infinite 10s',
         }}
       />
