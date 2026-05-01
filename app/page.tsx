@@ -76,22 +76,22 @@ export default function HomePage() {
     <div className="overflow-x-hidden">
 
       {/* ─────────────────────── HERO ─────────────────────── */}
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center z-10 -mt-28 pt-28">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+      <section className="relative overflow-hidden min-h-screen flex items-center z-10 -mt-28 pt-28">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
 
             {/* Left — Content */}
             <div className="text-center lg:text-left animate-fade-in">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-4">
                 Platform Belajar #1 di Indonesia
               </div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6 text-slate-900 dark:text-white">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-4 text-slate-900 dark:text-white">
                 Belajar Lebih
-                <span className="block text-[#7154DF] dark:text-indigo-400 mt-2">Cerdas &amp; Efektif</span>
+                <span className="block text-[#7154DF] dark:text-indigo-400 mt-1">Cerdas &amp; Efektif</span>
               </h1>
 
-              <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-base text-slate-600 dark:text-slate-400 mb-5 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 Tingkatkan pembelajaran Anda dengan berbagai metode terbukti seperti Teknik Feynman, Blurting Method, dan Mind Palace.
                 Quiz interaktif, flashcard, dan catatan pintar dalam satu platform.
               </p>
@@ -114,7 +114,7 @@ export default function HomePage() {
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+              <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
                 {[
                   { value: '10K+', label: 'Pengguna Aktif' },
                   { value: '500+', label: 'Quiz Tersedia' },
