@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { FaEye, FaEyeSlash, FaArrowRight } from 'react-icons/fa';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
@@ -20,6 +20,7 @@ const RobotMascot = dynamic(() => import('@/components/RobotMascot'), {
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
 
   const [email, setEmail] = useState('');
@@ -56,7 +57,8 @@ export default function LoginPage() {
     } else {
       setMascotState('cheer');
       setTimeout(() => {
-        router.replace('/dashboard');
+        const redirect = searchParams.get('redirect') || '/dashboard';
+        router.replace(redirect);
         router.refresh();
       }, 800);
     }

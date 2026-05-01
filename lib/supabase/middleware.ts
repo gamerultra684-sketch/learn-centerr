@@ -35,17 +35,22 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Route protection
-  const isProtected = 
-    request.nextUrl.pathname.startsWith('/dashboard') || 
-    request.nextUrl.pathname.startsWith('/learning') || 
-    request.nextUrl.pathname.startsWith('/admin') ||
-    request.nextUrl.pathname.startsWith('/notes/create') ||
-    request.nextUrl.pathname.startsWith('/profile');
-                      
+  // Route protection — semua halaman kecuali beranda (/) dan auth pages
+  const pathname = request.nextUrl.pathname;
+  const isProtected =
+    pathname.startsWith('/dashboard') ||
+    pathname.startsWith('/quiz') ||
+    pathname.startsWith('/flashcards') ||
+    pathname.startsWith('/notes') ||
+    pathname.startsWith('/learning') ||
+    pathname.startsWith('/admin') ||
+    pathname.startsWith('/profile');
+
   if (isProtected && !user) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
+    // Simpan halaman tujuan agar bisa redirect balik setelah login
+    url.searchParams.set('redirect', pathname);
     return NextResponse.redirect(url);
   }
 
