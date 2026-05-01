@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import GlassCard from './GlassCard';
 
 interface StatsCardProps {
   label: string;
@@ -17,21 +18,21 @@ export default function StatsCard({
   iconBgClass, iconColorClass, gradientClass, overlayClass,
 }: StatsCardProps) {
   return (
-    <div className="min-w-[85vw] sm:min-w-0 snap-center glass rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.1)] card-hover relative overflow-hidden border-t border-white/40 dark:border-gray-700/50">
+    <GlassCard hover padding="p-6" className="min-w-[85vw] sm:min-w-0 snap-center !rounded-2xl">
       {/* Color overlay */}
-      <div className={`absolute inset-0 ${overlayClass} mix-blend-multiply dark:mix-blend-screen pointer-events-none`} />
+      <div className={`absolute inset-0 ${overlayClass} mix-blend-multiply dark:mix-blend-screen pointer-events-none opacity-50`} />
 
       <div className="relative z-10 flex items-center justify-between">
         <div>
-          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">{label}</p>
+          <p className="text-gray-500 dark:text-gray-300 text-sm font-medium mb-1">{label}</p>
           <p className={`text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${gradientClass}`}>
             {value}
           </p>
         </div>
-        <div className={`w-12 h-12 ${iconBgClass} rounded-xl flex items-center justify-center ${iconColorClass} backdrop-blur-sm`}>
+        <div className={`w-12 h-12 ${iconBgClass} rounded-xl flex items-center justify-center ${iconColorClass} backdrop-blur-sm shadow-inner`}>
           {icon}
         </div>
       </div>
-    </div>
+    </GlassCard>
   );
 }

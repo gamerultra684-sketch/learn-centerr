@@ -2,32 +2,32 @@
 
 export default function AnimatedBackground() {
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none transition-opacity duration-300">
-      {/* Soft Indigo Blob */}
+    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none transition-opacity duration-500 bg-[#f8fafc] dark:bg-[#030712]">
+      {/* Deep Purple/Fuchsia Blob */}
       <div
-        className="absolute bg-indigo-200/30 dark:bg-indigo-900/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px]"
+        className="absolute bg-fuchsia-400/20 dark:bg-fuchsia-600/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[150px] dark:blur-[180px] opacity-70"
         style={{
-          top: '-10%', left: '-10%',
-          width: '50%', height: '50%',
-          animation: 'blob 15s infinite',
-        }}
-      />
-      {/* Soft Blue Blob */}
-      <div
-        className="absolute bg-blue-200/30 dark:bg-slate-800/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px]"
-        style={{
-          top: '20%', right: '-10%',
+          top: '-15%', left: '-10%',
           width: '60%', height: '60%',
-          animation: 'blob 18s infinite 5s',
+          animation: 'blob 18s infinite',
         }}
       />
-      {/* Soft Slate Blob */}
+      {/* Cyan/Teal Blob */}
       <div
-        className="absolute bg-slate-200/30 dark:bg-slate-900/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[140px]"
+        className="absolute bg-cyan-400/20 dark:bg-cyan-500/25 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[150px] dark:blur-[180px] opacity-70"
         style={{
-          bottom: '-20%', left: '10%',
-          width: '70%', height: '70%',
-          animation: 'blob 20s infinite 10s',
+          top: '20%', right: '-15%',
+          width: '65%', height: '65%',
+          animation: 'blob 22s infinite 5s',
+        }}
+      />
+      {/* Indigo Blob */}
+      <div
+        className="absolute bg-indigo-400/20 dark:bg-indigo-600/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[160px] dark:blur-[200px] opacity-70"
+        style={{
+          bottom: '-25%', left: '15%',
+          width: '75%', height: '75%',
+          animation: 'blob 25s infinite 10s',
         }}
       />
     </div>

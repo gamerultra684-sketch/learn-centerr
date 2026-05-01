@@ -142,7 +142,7 @@ export default function NotesPage() {
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
                 placeholder="Folder baru..."
-                className="flex-1 min-w-0 px-3 py-2 text-sm glass rounded-lg border border-white/20 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 min-w-0 px-3 py-2 text-sm glass-panel rounded-lg border border-white/20 dark:border-slate-700/50 bg-transparent focus:outline-none focus:ring-2 focus:ring-fuchsia-500 shadow-inner"
               />
               <button type="submit" disabled={!newFolderName.trim()} className="px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-primary-500 hover:text-white transition-colors disabled:opacity-50">
                 <FaPlus className="text-xs" />
@@ -160,18 +160,18 @@ export default function NotesPage() {
               </h1>
               <p className="text-gray-500 dark:text-gray-400 text-sm">Kelola dan jelajahi catatan pribadi Anda</p>
             </div>
-            <Link href={`/notes/create${activeFolder ? `?folder_id=${activeFolder}` : ''}`} className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors text-sm font-medium">
+            <Link href={`/notes/create${activeFolder ? `?folder_id=${activeFolder}` : ''}`} className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white rounded-xl transition-colors text-sm font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(192,38,211,0.3)] hover:shadow-[0_0_20px_rgba(192,38,211,0.5)]">
               <FaPlus /> Buat Catatan
             </Link>
           </div>
 
           {/* Search */}
           <div className="relative mb-6">
-            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text" value={search} onChange={(e) => setSearch(e.target.value)}
               placeholder="Cari catatan..."
-              className="w-full pl-11 pr-4 py-3 glass rounded-xl border border-white/20 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full pl-11 pr-4 py-3 glass-panel rounded-xl border border-white/20 dark:border-slate-700/50 bg-transparent focus:outline-none focus:ring-2 focus:ring-fuchsia-500 shadow-inner"
             />
           </div>
 
@@ -180,14 +180,14 @@ export default function NotesPage() {
               <p className="text-gray-500">Memuat catatan...</p>
             </div>
           ) : filtered.length === 0 ? (
-            <div className="text-center py-20 glass rounded-2xl">
-              <FaStickyNote className="text-5xl text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-500">Belum ada catatan ditemukan di kategori ini</p>
-            </div>
+            <GlassCard variant="panel" padding="p-12" className="text-center">
+              <FaStickyNote className="text-5xl text-slate-300 dark:text-slate-600 mx-auto mb-4 drop-shadow-md" />
+              <p className="text-slate-500 font-medium">Belum ada catatan ditemukan di kategori ini</p>
+            </GlassCard>
           ) : (
             <div className="grid md:grid-cols-2 gap-6">
               {filtered.map((note) => (
-                <GlassCard key={note.id} hover className="flex flex-col">
+                <GlassCard key={note.id} hover variant="panel" padding="p-6" className="flex flex-col group">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
                       {note.is_public
@@ -198,12 +198,12 @@ export default function NotesPage() {
                     </div>
                   </div>
                   <h3 className="font-bold text-lg mb-2 line-clamp-2">{note.title}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 flex-1 line-clamp-3">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 flex-1 line-clamp-3">
                     {truncate(stripHtml(note.content || ''), 120)}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-gray-400 pt-3 border-t border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-100 dark:border-slate-700/50">
                     <span>{formatDate(note.created_at, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                    <Link href={`/notes/${note.id}`} className="flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium">
+                    <Link href={`/notes/${note.id}`} className="flex items-center gap-1 text-fuchsia-600 hover:text-fuchsia-700 font-bold uppercase tracking-wider group-hover:gap-2 transition-all">
                       <FaEye /> Baca
                     </Link>
                   </div>

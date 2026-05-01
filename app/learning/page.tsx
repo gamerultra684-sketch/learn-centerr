@@ -23,7 +23,7 @@ export default function LearningMethodsPage() {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {methods.map((m) => (
-          <GlassCard key={m.title} hover className="flex flex-col">
+          <GlassCard key={m.title} hover variant="panel" padding="p-8" className="flex flex-col group">
             <div className={`w-14 h-14 bg-gradient-to-br ${m.color} rounded-xl flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition-transform`}>
               {m.icon}
             </div>
@@ -31,8 +31,8 @@ export default function LearningMethodsPage() {
               <span className="text-xs font-medium px-2 py-1 glass rounded-full text-gray-600 dark:text-gray-400">{m.tag}</span>
             </div>
             <h3 className="font-bold text-xl mb-3">{m.title}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-1">{m.desc}</p>
-            <Link href={m.href} className="mt-5 flex items-center gap-2 text-primary-600 dark:text-primary-400 text-sm font-medium hover:gap-3 transition-all">
+            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">{m.desc}</p>
+            <Link href={m.href} className="mt-5 flex items-center gap-2 text-fuchsia-600 dark:text-fuchsia-400 text-sm font-bold uppercase tracking-wider hover:gap-3 transition-all">
               Mulai <FaArrowRight />
             </Link>
           </GlassCard>

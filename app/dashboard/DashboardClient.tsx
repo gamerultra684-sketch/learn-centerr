@@ -123,10 +123,10 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
 
       <DashboardCharts isAdmin={isAdmin} dark={dark} textColor={textColor} weeklyData={weeklyData} historyData={initialData.historyData} />
 
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8">
+      <GlassCard variant="panel" padding="p-6" className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold">Distribusi Mata Pelajaran</h2>
-          <span className="text-xs text-gray-500 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Berdasarkan Jumlah Percobaan</span>
+          <span className="text-xs text-slate-700 dark:text-slate-300 bg-white/20 dark:bg-slate-800/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">Berdasarkan Jumlah Percobaan</span>
         </div>
         <div className="h-64 max-w-lg mx-auto">
           <ResponsiveContainer width="100%" height="100%">
@@ -134,12 +134,12 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
               <Pie data={subjectData} cx="50%" cy="50%" innerRadius={60} outerRadius={90} dataKey="value" nameKey="name">
                 {subjectData.map((_: any, i: number) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
               </Pie>
-              <Tooltip contentStyle={{ background: dark ? '#1f2937' : '#fff', border: 'none', borderRadius: 8 }} />
+              <Tooltip contentStyle={{ background: dark ? 'rgba(15,23,42,0.8)' : 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 8, backdropFilter: 'blur(10px)' }} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
         </div>
-      </div>
+      </GlassCard>
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
@@ -156,8 +156,8 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                       <span className="font-medium">{s.subject || 'Lainnya'}</span>
                       <span className="text-sm text-gray-500">{s.attempts} kali • Rata-rata {pct}%</span>
                     </div>
-                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-primary-500 to-purple-500 rounded-full transition-all duration-500" style={{ width: `${Math.min(pct, 100)}%` }} />
+                    <div className="h-3 bg-slate-200/50 dark:bg-slate-700/50 backdrop-blur-sm rounded-full overflow-hidden border border-white/10">
+                      <div className="h-full bg-gradient-to-r from-primary-500 to-fuchsia-500 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]" style={{ width: `${Math.min(pct, 100)}%` }} />
                     </div>
                   </div>
                 );
@@ -175,11 +175,11 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {learningModules.map((m) => (
-                <Link key={m.label} href={m.href} className={`group glass rounded-2xl p-5 ${m.hover} hover:shadow-lg transition-all border border-white/20 dark:border-gray-700/50`}>
-                  <div className={`w-12 h-12 bg-gradient-to-br ${m.color} rounded-xl flex items-center justify-center mb-3 text-white text-lg group-hover:scale-110 transition-transform`}>{m.icon}</div>
+                <Link key={m.label} href={m.href} className={`group glass-panel rounded-2xl p-5 hover:scale-105 transition-all duration-300 border border-white/20 shadow-lg`}>
+                  <div className={`w-12 h-12 bg-gradient-to-br ${m.color} rounded-xl flex items-center justify-center mb-3 text-white text-lg shadow-inner group-hover:shadow-[0_0_15px_currentColor]`}>{m.icon}</div>
                   <h3 className="font-bold text-sm mb-1">{m.label}</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">{m.desc}</p>
-                  <div className={`mt-3 flex items-center ${m.textColor} text-xs font-medium`}>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{m.desc}</p>
+                  <div className={`mt-3 flex items-center ${m.textColor} text-xs font-bold uppercase tracking-wider`}>
                     Mulai <FaArrowRight className="ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
@@ -191,23 +191,23 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
         <div className="space-y-8">
           <QuickActions actions={quickActions} />
 
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+          <GlassCard variant="panel" padding="p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold">{isAdmin ? 'Flashcard Terbaru' : 'Flashcard Terakhir'}</h2>
-              <Link href="/flashcards" className="text-primary-600 hover:text-primary-700 text-sm">Lainnya <FaArrowRight className="inline ml-1" /></Link>
+              <Link href="/flashcards" className="text-primary-600 dark:text-fuchsia-400 hover:text-primary-700 text-sm font-semibold">Lainnya <FaArrowRight className="inline ml-1" /></Link>
             </div>
-            <p className="text-gray-500 text-center py-4">Fungsionalitas flashcard segera hadir</p>
-          </div>
+            <p className="text-slate-500 text-center py-4">Fungsionalitas flashcard segera hadir</p>
+          </GlassCard>
 
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+          <GlassCard variant="panel" padding="p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold">{isAdmin ? 'Catatan Terbaru' : 'Catatan Terakhir'}</h2>
-              <Link href={isAdmin ? '/admin/notes' : '/notes'} className="text-primary-600 hover:text-primary-700 text-sm">Lainnya <FaArrowRight className="inline ml-1" /></Link>
+              <Link href={isAdmin ? '/admin/notes' : '/notes'} className="text-primary-600 dark:text-fuchsia-400 hover:text-primary-700 text-sm font-semibold">Lainnya <FaArrowRight className="inline ml-1" /></Link>
             </div>
-            {recentNotes.length === 0 ? <p className="text-gray-500 text-center py-4">Belum ada catatan</p> : (
+            {recentNotes.length === 0 ? <p className="text-slate-500 text-center py-4">Belum ada catatan</p> : (
               <div className="space-y-3">
                 {recentNotes.map((n: any) => (
-                  <Link key={n.id} href={`/notes/${n.id}`} className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                  <Link key={n.id} href={`/notes/${n.id}`} className="flex items-center p-3 glass hover:bg-white/30 dark:hover:bg-slate-800/50 rounded-xl transition-all border-none">
                     <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
                       <FaStickyNote className="text-green-600" />
                     </div>
@@ -222,7 +222,7 @@ export default function DashboardClient({ initialData }: { initialData: any }) {
                 ))}
               </div>
             )}
-          </div>
+          </GlassCard>
         </div>
       </div>
     </div>

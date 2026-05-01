@@ -91,7 +91,7 @@ html {
   background-color: #f8fafc; /* Slate 50 */
 }
 html.dark {
-  background-color: #0f172a; /* Slate 900 */
+  background-color: #030712; /* Gray 950 */
 }
 
 body {
@@ -99,8 +99,8 @@ body {
   color: #1e293b; /* Slate 800 */
 }
 html.dark body {
-  background-color: #0f172a;
-  color: #f1f5f9; /* Slate 100 */
+  background-color: #030712;
+  color: #f3f4f6; /* Gray 100 */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -143,47 +143,65 @@ h1, h2, h3, h4, h5, h6 {
 .dark ::-webkit-scrollbar-track { background: #1f2937; }
 
 /* ------------------------------------------------------------------
-   Glassmorphism (Minimal Soft)
+   Glassmorphism (Premium Standard 2025)
    ------------------------------------------------------------------ */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07), inset 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 .dark .glass {
-  background: rgba(30, 41, 59, 0.5); /* Slate 800/50 */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  background: rgba(15, 23, 42, 0.3); 
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* ------------------------------------------------------------------
    Gradient text
    ------------------------------------------------------------------ */
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 /* ------------------------------------------------------------------
-   Soft Hover
+   Soft Hover (Premium Glow)
    ------------------------------------------------------------------ */
 .card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15), 0 10px 20px -5px rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
 }
 .dark .card-hover:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
-  background: rgba(30, 41, 59, 0.7);
+  box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.25), 0 10px 20px -5px rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.3);
+  background: rgba(30, 41, 59, 0.6);
 }
 
 /* ------------------------------------------------------------------

@@ -5,14 +5,17 @@ interface GlassCardProps {
   className?: string;
   hover?: boolean;
   padding?: string;
+  variant?: 'default' | 'panel';
 }
 
-/** Reusable glassmorphism card — exact .glass styling from header.php */
-export default function GlassCard({ children, className = '', hover = false, padding = 'p-6' }: GlassCardProps) {
+/** Reusable premium glassmorphism card */
+export default function GlassCard({ children, className = '', hover = false, padding = 'p-6', variant = 'default' }: GlassCardProps) {
+  const baseClass = variant === 'panel' ? 'glass-panel' : 'glass';
   return (
     <div
-      className={`glass rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] ${padding} relative overflow-hidden border-t border-white/40 dark:border-gray-700/50 ${hover ? 'card-hover' : ''} ${className}`}
+      className={`${baseClass} rounded-2xl ${padding} relative overflow-hidden ${hover ? 'card-hover' : ''} ${className}`}
     >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
       {children}
     </div>
   );

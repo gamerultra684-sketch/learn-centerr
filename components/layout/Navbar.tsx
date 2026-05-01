@@ -69,18 +69,18 @@ export default function Navbar() {
   return (
     <>
       {/* ── TOP NAV ── */}
-      <nav className="sticky top-0 z-50 glass border-b border-slate-200/50 dark:border-slate-700/50 transition-all duration-300">
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
+      <div className="fixed top-4 inset-x-0 z-50 flex justify-center pointer-events-none px-4">
+        <nav className="pointer-events-auto glass-panel rounded-full px-4 border border-white/20 shadow-2xl transition-all duration-300 w-full max-w-7xl relative overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
+          <div className="flex justify-between h-14 items-center">
 
             {/* Logo */}
             <div className="flex items-center">
-              <Link href="/" className="flex items-center space-x-2 group">
-                <div className="w-9 h-9 bg-indigo-600 dark:bg-indigo-500 rounded-xl flex items-center justify-center transform group-hover:-rotate-6 group-hover:scale-110 transition-all shadow-sm">
-                  <span className="text-white font-bold text-sm">LC</span>
+              <Link href="/" className="flex items-center space-x-2 group pl-2">
+                <div className="w-8 h-8 bg-gradient-to-tr from-indigo-600 to-fuchsia-500 rounded-full flex items-center justify-center transform group-hover:-rotate-12 group-hover:scale-110 transition-all shadow-sm">
+                  <span className="text-white font-bold text-xs">LC</span>
                 </div>
-                <span className="text-xl font-bold text-slate-900 dark:text-white">Learn <span className="text-indigo-600 dark:text-indigo-400">Center</span></span>
+                <span className="text-lg font-bold text-slate-900 dark:text-white hidden sm:block">Learn <span className="text-indigo-600 dark:text-fuchsia-400">Center</span></span>
               </Link>
             </div>
 
@@ -90,10 +90,10 @@ export default function Navbar() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                     pathname === l.href
-                      ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                      ? 'bg-indigo-500/10 dark:bg-fuchsia-500/20 text-indigo-600 dark:text-fuchsia-400'
+                      : 'text-slate-600 dark:text-slate-300 hover:bg-slate-500/10 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   {l.label}
@@ -102,7 +102,7 @@ export default function Navbar() {
               {user && isAdmin && (
                 <Link
                   href="/admin"
-                  className="px-4 py-2 rounded-lg text-sm font-medium text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
+                  className="px-4 py-2 rounded-full text-sm font-semibold text-fuchsia-600 dark:text-fuchsia-400 hover:bg-fuchsia-500/10 transition-colors"
                 >
                   Admin
                 </Link>
@@ -110,18 +110,18 @@ export default function Navbar() {
             </div>
 
             {/* Right side */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pr-2">
 
               {/* Theme toggle */}
               <button
                 id="themeToggle"
                 onClick={toggleTheme}
-                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-500/10 transition-colors text-slate-600 dark:text-slate-300"
                 aria-label="Toggle theme"
               >
                 {isDark
                   ? <FaMoon className="text-blue-400" />
-                  : <FaSun className="text-yellow-500" />
+                  : <FaSun className="text-amber-500" />
                 }
               </button>
 
@@ -131,37 +131,37 @@ export default function Navbar() {
                   <button
                     id="userMenuBtn"
                     onClick={(e) => { e.stopPropagation(); setUserMenuOpen((v) => !v); }}
-                    className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    className="flex items-center space-x-2 p-1 pl-2 pr-3 rounded-full hover:bg-slate-500/10 transition-colors border border-transparent hover:border-white/10"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={avatar}
                       alt="Avatar"
-                      className="w-8 h-8 rounded-full object-cover border-2 border-primary-500"
+                      className="w-7 h-7 rounded-full object-cover border border-indigo-500/50"
                       onError={(e) => { (e.target as HTMLImageElement).src = '/images/default-avatar.png'; }}
                     />
-                    <span className="hidden sm:block text-sm font-medium">{user.username}</span>
-                    <FaChevronDown className="text-xs hidden sm:block" />
+                    <span className="hidden lg:block text-sm font-semibold text-slate-800 dark:text-slate-200">{user.username}</span>
+                    <FaChevronDown className="text-xs hidden lg:block text-slate-500" />
                   </button>
 
                   {userMenuOpen && (
                     <div
                       id="userMenu"
-                      className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50"
+                      className="absolute right-0 mt-3 w-48 glass-panel rounded-2xl shadow-2xl py-2 z-50 border border-white/20"
                     >
-                      <Link href="/profile"   onClick={() => setUserMenuOpen(false)} className="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                        <FaUser className="mr-2 text-gray-400" /> Profil
+                      <Link href="/profile"   onClick={() => setUserMenuOpen(false)} className="flex items-center px-4 py-2 text-sm hover:bg-slate-500/10 transition-colors text-slate-700 dark:text-slate-200">
+                        <FaUser className="mr-2 text-indigo-400" /> Profil
                       </Link>
-                      <Link href="/notes"     onClick={() => setUserMenuOpen(false)} className="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                        <FaBook className="mr-2 text-gray-400" /> Catatan Saya
+                      <Link href="/notes"     onClick={() => setUserMenuOpen(false)} className="flex items-center px-4 py-2 text-sm hover:bg-slate-500/10 transition-colors text-slate-700 dark:text-slate-200">
+                        <FaBook className="mr-2 text-fuchsia-400" /> Catatan Saya
                       </Link>
-                      <Link href="/dashboard" onClick={() => setUserMenuOpen(false)} className="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                        <FaFolder className="mr-2 text-gray-400" /> Folder
+                      <Link href="/dashboard" onClick={() => setUserMenuOpen(false)} className="flex items-center px-4 py-2 text-sm hover:bg-slate-500/10 transition-colors text-slate-700 dark:text-slate-200">
+                        <FaFolder className="mr-2 text-cyan-400" /> Folder
                       </Link>
-                      <hr className="my-2 border-gray-200 dark:border-gray-700" />
+                      <hr className="my-2 border-slate-500/20" />
                       <button
                         onClick={() => { logout(); setUserMenuOpen(false); }}
-                        className="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                        className="w-full flex items-center px-4 py-2 text-sm text-red-500 hover:bg-red-500/10 transition-colors"
                       >
                         <FaSignOutAlt className="mr-2" /> Keluar
                       </button>
@@ -169,28 +169,28 @@ export default function Navbar() {
                   )}
                 </div>
               ) : (
-                <>
-                  <Link href="/login"    className="hidden sm:block px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                <div className="hidden sm:flex items-center gap-2">
+                  <Link href="/login"    className="px-4 py-1.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-fuchsia-400 transition-colors rounded-full hover:bg-slate-500/10">
                     Masuk
                   </Link>
-                  <Link href="/register" className="px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors btn-ripple shadow-sm">
+                  <Link href="/register" className="px-5 py-1.5 text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-full transition-colors shadow-lg hover:shadow-indigo-500/25">
                     Daftar
                   </Link>
-                </>
+                </div>
               )}
 
               {/* Hamburger (mobile) */}
               <button
                 id="mobileMenuBtn"
                 onClick={() => setMobileOpen(true)}
-                className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="md:hidden w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-500/10 transition-colors text-slate-700 dark:text-slate-200"
               >
                 <FaBars />
               </button>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* ── MOBILE MENU ── */}
       <div

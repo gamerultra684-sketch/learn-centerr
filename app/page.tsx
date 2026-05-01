@@ -9,6 +9,7 @@ import {
   FaCheck, FaBrain,
   FaStar, FaStarHalfAlt,
 } from 'react-icons/fa';
+import GlassCard from '@/components/ui/GlassCard';
 
 // ── Learning Methods — ported from functions.php getLearningMethods() ─────
 const learningMethods = [
@@ -99,14 +100,14 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <Link
                   href="/quiz"
-                  className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-sm transform hover:-translate-y-0.5 transition-all btn-ripple flex items-center justify-center"
+                  className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white rounded-full font-semibold shadow-[0_8px_32px_rgba(99,102,241,0.4)] transform hover:-translate-y-1 transition-all flex items-center justify-center"
                 >
                   <FaPlay className="mr-2" />
                   Mulai Belajar
                 </Link>
                 <Link
                   href="#features"
-                  className="px-8 py-4 bg-white/50 dark:bg-white/5 text-gray-800 dark:text-white rounded-xl font-semibold hover:bg-white/80 dark:hover:bg-white/10 transition-colors border border-gray-300 dark:border-gray-700 flex items-center justify-center backdrop-blur-md"
+                  className="px-8 py-4 bg-white/10 dark:bg-slate-800/30 text-slate-800 dark:text-white rounded-full font-semibold hover:bg-white/20 dark:hover:bg-slate-700/50 transition-all border border-slate-300/50 dark:border-slate-600/50 flex items-center justify-center backdrop-blur-xl hover:border-white/50"
                 >
                   <FaInfoCircle className="mr-2" />
                   Pelajari Lebih
@@ -132,11 +133,11 @@ export default function HomePage() {
             <div className="relative hidden lg:block">
               <div className="relative z-10 animate-float">
                 {/* Main card */}
-                <div className="glass rounded-2xl p-6 transition-all duration-500 hover:shadow-md">
+                <GlassCard hover variant="panel" padding="p-6 transition-all duration-500">
                   <div className="flex items-center space-x-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600" />
-                    <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600" />
-                    <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600" />
+                    <div className="w-3 h-3 rounded-full bg-red-400/80" />
+                    <div className="w-3 h-3 rounded-full bg-amber-400/80" />
+                    <div className="w-3 h-3 rounded-full bg-green-400/80" />
                   </div>
                   <div className="space-y-3">
                     <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
@@ -147,10 +148,10 @@ export default function HomePage() {
                       <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-20" />
                     </div>
                   </div>
-                </div>
+                </GlassCard>
 
                 {/* Floating badge — correct */}
-                <div className="absolute -top-6 -right-6 glass rounded-xl p-4 shadow-sm">
+                <GlassCard padding="p-4" className="absolute -top-6 -right-6 !rounded-2xl shadow-2xl border-green-500/30">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
                       <FaCheck className="text-green-500" />
@@ -160,10 +161,10 @@ export default function HomePage() {
                       <div className="text-xs text-gray-500">+10 poin</div>
                     </div>
                   </div>
-                </div>
+                </GlassCard>
 
                 {/* Floating badge — streak */}
-                <div className="absolute -bottom-4 -left-6 glass rounded-xl p-4 shadow-sm">
+                <GlassCard padding="p-4" className="absolute -bottom-4 -left-6 !rounded-2xl shadow-2xl border-purple-500/30">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
                       <FaBrain className="text-purple-500" />
@@ -173,7 +174,7 @@ export default function HomePage() {
                       <div className="text-xs text-gray-500">Pertahankan!</div>
                     </div>
                   </div>
-                </div>
+                </GlassCard>
               </div>
 
               {/* Spinning dashed ring removed for minimalism */}
@@ -199,8 +200,8 @@ export default function HomePage() {
               { icon: <FaStickyNote className="text-sky-600 dark:text-sky-400 text-2xl" />, title: 'Catatan Pintar', desc: 'Editor rich text dengan upload file, folder management, dan sharing', color: 'bg-sky-50 dark:bg-sky-900/20', href: '/notes', cta: 'Buat Catatan' },
               { icon: <FaLightbulb className="text-teal-600 dark:text-teal-400 text-2xl" />, title: 'Metode Belajar', desc: 'Pelajari dan praktikkan teknik Feynman, Blurting, Mind Palace, dan lainnya', color: 'bg-teal-50 dark:bg-teal-900/20', href: '/learning', cta: 'Eksplorasi' },
             ].map((f) => (
-              <div key={f.title} className="group card-hover glass rounded-2xl p-6 text-center">
-                <div className={`w-16 h-16 mx-auto mb-4 ${f.color} rounded-2xl flex items-center justify-center transform group-hover:scale-105 transition-all duration-300`}>
+              <GlassCard key={f.title} hover padding="p-6 text-center group">
+                <div className={`w-16 h-16 mx-auto mb-4 ${f.color} rounded-2xl flex items-center justify-center transform group-hover:-translate-y-2 group-hover:scale-110 transition-all duration-300 shadow-lg`}>
                   {f.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
@@ -208,7 +209,7 @@ export default function HomePage() {
                 <Link href={f.href} className="text-sm font-medium text-primary-600 hover:underline">
                   {f.cta} <FaArrowRight className="inline ml-1" />
                 </Link>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </div>
@@ -226,9 +227,10 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {learningMethods.map((method, index) => (
-              <div
+              <GlassCard
                 key={method.id}
-                className="group card-hover glass rounded-2xl overflow-hidden"
+                hover
+                padding="p-0"
               >
                 <div className={`h-2 bg-gradient-to-r ${method.color}`} />
                 <div className="p-6">
@@ -254,7 +256,7 @@ export default function HomePage() {
                     Pelajari Lebih Lanjut
                   </Link>
                 </div>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </div>
@@ -305,7 +307,7 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((t) => (
-              <div key={t.name} className="glass rounded-2xl p-6 card-hover">
+              <GlassCard key={t.name} hover padding="p-6">
                 <div className="flex items-center mb-4">
                   <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold text-lg`}>
                     {t.initial}
@@ -322,15 +324,16 @@ export default function HomePage() {
                   {t.rating % 1 !== 0 && <FaStarHalfAlt />}
                 </div>
                 <p className="text-gray-600 dark:text-gray-400">{t.text}</p>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </div>
       </section>
 
       <section className="py-20 relative z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center glass p-12 rounded-3xl">
-          <h2 className="text-3xl sm:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <GlassCard variant="panel" padding="p-12 text-center" className="!rounded-[3rem] border border-fuchsia-500/20 shadow-[0_0_100px_rgba(168,85,247,0.15)]">
+            <h2 className="text-3xl sm:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
             Siap untuk Meningkatkan Belajar Anda?
           </h2>
           <p className="text-lg mb-8 text-gray-600 dark:text-gray-400">
@@ -361,6 +364,7 @@ export default function HomePage() {
               </>
             )}
           </div>
+          </GlassCard>
         </div>
       </section>
 

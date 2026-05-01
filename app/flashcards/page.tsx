@@ -34,10 +34,10 @@ export default function FlashcardsPage() {
       </div>
 
       <div className="relative mb-6">
-        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
         <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
           placeholder="Cari deck flashcard..."
-          className="w-full pl-11 pr-4 py-3 glass rounded-xl border border-white/20 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary-500" />
+          className="w-full pl-11 pr-4 py-3 glass-panel rounded-xl border border-white/20 dark:border-slate-700/50 bg-transparent focus:outline-none focus:ring-2 focus:ring-fuchsia-500 shadow-inner" />
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -50,22 +50,22 @@ export default function FlashcardsPage() {
             Deck tidak ditemukan
           </div>
         ) : filteredDecks.map((deck) => (
-          <GlassCard key={deck.id} hover className="flex flex-col">
+          <GlassCard key={deck.id} hover variant="panel" padding="p-6" className="flex flex-col group">
             <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center">
-                <FaLayerGroup className="text-purple-600 text-xl" />
+              <div className="w-12 h-12 bg-gradient-to-br from-fuchsia-500 to-purple-600 rounded-xl flex items-center justify-center shadow-inner group-hover:shadow-[0_0_15px_rgba(192,38,211,0.5)] transition-all">
+                <FaLayerGroup className="text-white text-xl" />
               </div>
               <Badge variant="purple">{deck.subject}</Badge>
             </div>
             <h3 className="font-bold text-lg mb-2">{deck.title}</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 flex-1 line-clamp-2">{deck.description}</p>
-            <div className="flex items-center justify-between text-xs text-gray-400 mb-4">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 flex-1 line-clamp-2">{deck.description}</p>
+            <div className="flex items-center justify-between text-xs text-slate-400 mb-4">
               <span><FaLayerGroup className="inline mr-1" />{deck.flashcards?.[0]?.count ?? 0} kartu</span>
               <span><FaClock className="inline mr-1" />{formatDate(deck.created_at, { day: 'numeric', month: 'short' })}</span>
             </div>
             <Link href={`/flashcards/study?deck_id=${deck.id}`}
-              className="w-full flex items-center justify-center gap-2 py-2.5 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors text-sm font-medium">
-              Mulai Belajar <FaArrowRight />
+              className="w-full flex items-center justify-center gap-2 py-2.5 bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white rounded-xl hover:from-fuchsia-500 hover:to-purple-500 transition-colors text-sm font-bold uppercase tracking-wider shadow-lg hover:shadow-[0_0_15px_rgba(192,38,211,0.4)]">
+              Mulai Belajar <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </GlassCard>
         ))}
