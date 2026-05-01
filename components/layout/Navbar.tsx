@@ -197,13 +197,13 @@ export default function Navbar() {
       >
         <div
           id="mobileMenuOverlay"
-          className="absolute inset-0 bg-black/50"
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
         />
 
         <div
           id="mobilePanel"
-          className="absolute right-0 top-0 bottom-0 w-full glass shadow-xl flex flex-col z-50"
+          className="absolute right-0 top-0 bottom-0 w-[280px] bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl shadow-2xl flex flex-col z-50 border-l border-white/20 dark:border-slate-800"
           style={{ transform: mobileOpen ? 'translateX(0)' : 'translateX(100%)', transition: 'transform 0.3s ease' }}
         >
           {/* Header */}
