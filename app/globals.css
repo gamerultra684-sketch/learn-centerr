@@ -88,19 +88,19 @@
 }
 
 html {
-  background-color: #f8fafc; /* Slate 50 */
+  background-color: #f8fafc;
 }
 html.dark {
-  background-color: #030712; /* Gray 950 */
+  background-color: #030712;
 }
 
 body {
-  background-color: #f8fafc;
-  color: #1e293b; /* Slate 800 */
+  background-color: transparent;
+  color: #1e293b;
 }
 html.dark body {
-  background-color: #030712;
-  color: #f3f4f6; /* Gray 100 */
+  background-color: transparent;
+  color: #f3f4f6;
 }
 
 h1, h2, h3, h4, h5, h6 {
