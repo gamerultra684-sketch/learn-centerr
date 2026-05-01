@@ -130,50 +130,48 @@ export default function HomePage() {
 
             {/* Right — Floating illustration (hidden on mobile) */}
             <div className="relative hidden lg:block">
-              <div className="relative z-10 animate-float">
-                {/* Main card */}
-                <GlassCard hover variant="panel" padding="p-6 transition-all duration-500">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-red-400/80" />
-                    <div className="w-3 h-3 rounded-full bg-amber-400/80" />
-                    <div className="w-3 h-3 rounded-full bg-green-400/80" />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full" />
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6" />
-                    <div className="flex space-x-2 mt-4">
-                      <div className="h-8 bg-primary-500 rounded-lg w-20" />
-                      <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-20" />
+              <div className="relative z-10 animate-float w-[450px] ml-auto">
+                {/* Main card - ROTATED */}
+                <div className="transform rotate-[6deg] w-full">
+                  <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-700/50 shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-2xl p-8">
+                    <div className="flex items-center space-x-2.5 mb-6">
+                      <div className="w-3.5 h-3.5 rounded-full bg-[#FF5F56]" />
+                      <div className="w-3.5 h-3.5 rounded-full bg-[#FFBD2E]" />
+                      <div className="w-3.5 h-3.5 rounded-full bg-[#27C93F]" />
+                    </div>
+                    <div className="space-y-4">
+                      <div className="h-4 bg-slate-200/80 dark:bg-slate-700/80 rounded-full w-[90%]" />
+                      <div className="h-4 bg-slate-200/80 dark:bg-slate-700/80 rounded-full w-[100%]" />
+                      <div className="h-4 bg-slate-200/80 dark:bg-slate-700/80 rounded-full w-[85%]" />
+                      <div className="flex space-x-3 mt-6 pt-2">
+                        <div className="h-10 bg-[#3B82F6] rounded-xl w-28 shadow-lg shadow-blue-500/20" />
+                        <div className="h-10 bg-slate-200/80 dark:bg-slate-700/80 rounded-xl w-20" />
+                      </div>
                     </div>
                   </div>
-                </GlassCard>
+                </div>
 
-                {/* Floating badge — correct */}
-                <GlassCard padding="p-4" className="absolute -top-6 -right-6 !rounded-2xl shadow-2xl border-green-500/30">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                      <FaCheck className="text-green-500" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold">Jawaban Benar!</div>
-                      <div className="text-xs text-gray-500">+10 poin</div>
-                    </div>
+                {/* Floating badge — correct (STRAIGHT) */}
+                <div className="absolute -top-10 -right-6 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl p-4 pr-8 rounded-2xl shadow-xl border border-white/60 dark:border-slate-700/50 flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center shadow-inner">
+                    <FaCheck className="text-green-500 text-sm" />
                   </div>
-                </GlassCard>
+                  <div>
+                    <div className="text-sm font-bold text-slate-800 dark:text-white">Jawaban Benar!</div>
+                    <div className="text-xs text-slate-500 mt-0.5">+10 poin</div>
+                  </div>
+                </div>
 
-                {/* Floating badge — streak */}
-                <GlassCard padding="p-4" className="absolute -bottom-4 -left-6 !rounded-2xl shadow-2xl border-purple-500/30">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
-                      <FaBrain className="text-purple-500" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold">Streak 7 Hari</div>
-                      <div className="text-xs text-gray-500">Pertahankan!</div>
-                    </div>
+                {/* Floating badge — streak (STRAIGHT) */}
+                <div className="absolute -bottom-8 -left-10 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl p-4 pr-8 rounded-2xl shadow-xl border border-white/60 dark:border-slate-700/50 flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-[#E0E7FF] dark:bg-indigo-900/30 rounded-full flex items-center justify-center shadow-inner">
+                    <FaBrain className="text-[#7154DF] text-sm" />
                   </div>
-                </GlassCard>
+                  <div>
+                    <div className="text-sm font-bold text-slate-800 dark:text-white">Streak 7 Hari</div>
+                    <div className="text-xs text-slate-500 mt-0.5">Pertahankan!</div>
+                  </div>
+                </div>
               </div>
 
               {/* Spinning dashed ring removed for minimalism */}
