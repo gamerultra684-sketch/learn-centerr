@@ -70,8 +70,8 @@ export default function Navbar() {
     <>
       {/* ── TOP NAV ── */}
       <div className="fixed top-4 inset-x-0 z-50 flex justify-center pointer-events-none px-4">
-        <nav className="pointer-events-auto glass-panel rounded-full px-4 border border-white/20 shadow-2xl transition-all duration-300 w-full max-w-7xl relative overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
+        <nav className="pointer-events-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl rounded-full px-4 border border-white/50 dark:border-slate-700/50 shadow-[0_10px_40px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_40px_rgba(0,0,0,0.4)] transition-all duration-300 w-full max-w-7xl relative overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent pointer-events-none" />
           <div className="flex justify-between h-14 items-center">
 
             {/* Logo */}
@@ -90,7 +90,7 @@ export default function Navbar() {
                   href={l.href}
                   className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                     pathname === l.href
-                      ? 'bg-indigo-500/10 dark:bg-fuchsia-500/20 text-indigo-600 dark:text-fuchsia-400'
+                      ? 'bg-indigo-100 dark:bg-fuchsia-500/20 text-indigo-600 dark:text-fuchsia-400'
                       : 'text-slate-600 dark:text-slate-300 hover:bg-slate-500/10 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
